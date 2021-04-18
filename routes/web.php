@@ -13,6 +13,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+// Route::get('/', function () {
+//     return view('index');
+// });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+//Balance Packages Orders
+Route::get('/balancepackages', 'BalancePackageController@index');
+Route::get('/balancepackages/add', 'BalancePackageController@create');
+Route::get('/balancepackages/edit/{id}', 'BalancePackageController@edit');
+
+Route::post('/balancepackages/store', 'BalancePackageController@store');
+Route::post('/balancepackages/update/{id}', 'BalancePackageController@update');
+Route::delete('/balancepackages/delete/{id}', 'BalancePackageController@destroy');
