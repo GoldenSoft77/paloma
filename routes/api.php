@@ -17,3 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/welcome','WelcomeController@showapi');
+Route::get('/newsticker','NewstickerController@showapi');
+Route::get('/slider','SliderController@showapi');
+Route::get('/socail_media','SocailmediaController@showapi');

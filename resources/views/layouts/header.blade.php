@@ -79,7 +79,7 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
-      <img src="dist/img/logo.png" class="brand-image img-circle elevation-3">
+      <img src="{{ asset('dist/img/logo.png') }}" class="brand-image img-circle elevation-3">
     </a>
 
     <!-- Sidebar -->
@@ -109,25 +109,25 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ url('/welcome_page') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Welcome Page Content</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ url('/slider') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Slider</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ url('/animated_bar') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Ainmated ticker</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link active">
+                <a href="{{ url('/socail_media') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Social Media Links</p>
                 </a>
