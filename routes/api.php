@@ -22,6 +22,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('storebalance','BalanceOrderController@store');
 Route::post('storebill','BillOrderController@store');
+// Route::post('vendorRequest','ApiController@vendorRequest');
+
 
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
@@ -32,3 +34,4 @@ Route::get('/welcome','WelcomeController@showapi');
 Route::get('/newsticker','NewstickerController@showapi');
 Route::get('/slider','SliderController@showapi');
 Route::get('/socail_media','SocailmediaController@showapi');
+

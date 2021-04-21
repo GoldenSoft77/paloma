@@ -144,27 +144,33 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/vendors" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>All Vendors</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/products" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Vendors Products</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/pending_vendors" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Pending Vendors</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/pending_products" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Pending Products</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/productsections" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Product Section</p>
                 </a>
               </li>
             </ul>

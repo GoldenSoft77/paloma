@@ -17,10 +17,11 @@ use Illuminate\Support\Facades\Route;
 //     return view('index');
 // });
 
-Auth::routes();
+Auth::routes(['verify' => true]);
+Route::group(['middleware' => 'auth'], function () {
 
 Route::get('/home', 'HomeController@index')->name('home');
-
+});
 //Balance Packages Orders
 Route::get('/balancepackages', 'BalancePackageController@index');
 Route::get('/balancepackages/add', 'BalancePackageController@create');
@@ -29,9 +30,7 @@ Route::get('/balancepackages/edit/{id}', 'BalancePackageController@edit');
 Route::post('/balancepackages/store', 'BalancePackageController@store');
 Route::post('/balancepackages/update/{id}', 'BalancePackageController@update');
 Route::delete('/balancepackages/delete/{id}', 'BalancePackageController@destroy');
-Route::get('/', function () {
-    return view('index');
-});
+
 
 // Welcome Page
 Route::get('/welcome_page', 'WelcomeController@index');
@@ -58,4 +57,27 @@ Route::post('/animated_bar/update/{id}', 'NewstickerController@update');
 //Socail Media Links
 Route::get('/socail_media','SocailmediaController@index');
 Route::post('/socail_media/update','SocailmediaController@update');
+
+//Vendors
+Route::get('/vendorRequest','VendorController@vendor_request');
+Route::get('/pending_vendors','VendorController@pending');
+Route::get('/vendors','VendorController@index');
+Route::get('/vendors/approve/{id}', 'VendorController@approve_vendor');
+
+//Products
+Route::get('/products','ProductController@index');
+Route::get('/pending_products','ProductController@pending');
+Route::get('/products/approve/{id}', 'ProductController@approve_product');
+Route::delete('/products/delete/{id}', 'ProductController@approve_product_delete');
+
+//Product Sections
+Route::get('/productsections', 'ProductSectionController@index');
+Route::get('/productsections/add', 'ProductSectionController@create');
+Route::get('/productsections/edit/{id}', 'ProductSectionController@edit');
+
+Route::post('/productsections/store', 'ProductSectionController@store');
+Route::post('/productsections/update/{id}', 'ProductSectionController@update');
+Route::delete('/productsections/delete/{id}', 'ProductSectionController@destroy');
+
+
 
