@@ -38,11 +38,7 @@
                   <i class="fas fa-check"></i>
                 </a>
               </li>
-              <!-- <li>
-                <button data-toggle="modal" data-target="">
-                  <i class="fas fa-trash-alt"></i>
-                </button>
-              </li> -->
+          
             </ul>
           </div>
         </div>

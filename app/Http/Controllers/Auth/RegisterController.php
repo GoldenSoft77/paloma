@@ -7,7 +7,10 @@ use App\Providers\RouteServiceProvider;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth; 
+
 
 class RegisterController extends Controller
 {
@@ -38,23 +41,10 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('auth')->except(['register', 'login']);
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'first_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
-    }
+  
 
     /**
      * Create a new user instance after a valid registration.
@@ -62,20 +52,51 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
-    protected function create(array $data)
+    protected function register(Request $request)
     {
-        return User::create([
-            'first_name' => $data['first_name'],
-            'last_name' => $data['last_name'],
-            'date_birth' => $data['date_birth'],
-            'country' => $data['country'],
-            'nationality' => $data['nationality'],
-            'sex' => $data['country'],
-            'email' => $data['email'],
-            'phone_number' => $data['phone_number'],
-            'user_type_id' => $data['user_type_id'],
-            'status' => $data['status'],
-            'password' => Hash::make($data['password']),
-        ]);
+        $request->validate([
+        'first_name'=> 'required|string',
+        'last_name'=> 'required|string',
+        'date_birth'=> 'required',
+        'country'=> 'required',
+        'nationality'=> 'required',
+        'sex'=> 'required',
+        'phone_number'=> 'required',
+        'user_type_id'=> 'required',
+        'status'=> 'required',
+        'email' => 'required|email',
+        'password' => 'required|string',
+    ]);
+        $token = Str::random(80);
+       
+        if (User::where('email', '=', $request->email)->exists()) {
+
+            return response()->json(['code'=> 0,"data"=>'The email is already taken'], 401); 
+         }
+         else{
+            $user =  User::create([
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'date_birth' => $request->date_birth,
+                'country' => $request->country,
+                'nationality' => $request->nationality,
+                'sex' => $request->sex,
+                'email' => $request->email,
+                'phone_number' => $request->phone_number,
+                'user_type_id' =>$request->user_type_id,
+                'status' => $request->status,
+                'password' =>bcrypt($request->password),
+                'api_token' => hash('sha256', $token),
+               
+            ]);
+        $success['token'] =  $token; 
+        $success['user'] = $user;
+        Auth::login($user);
+        return response()->json(['code' => 1,"data"=>$success], 200);
+
+       }
+
     }
+
+  
 }

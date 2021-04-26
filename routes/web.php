@@ -80,4 +80,5 @@ Route::post('/productsections/update/{id}', 'ProductSectionController@update');
 Route::delete('/productsections/delete/{id}', 'ProductSectionController@destroy');
 
 
-
+Route::get('stripe', 'StripePaymentController@stripe');
+Route::post('stripe', 'StripePaymentController@stripePost')->name('stripe.post');

@@ -20,18 +20,25 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::post('storebalance','BalanceOrderController@store');
-Route::post('storebill','BillOrderController@store');
+// Route::post('storebill','BillOrderController@store');
 // Route::post('vendorRequest','ApiController@vendorRequest');
 
 
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Auth Routes 
+Route::post('login', 'Auth\LoginController@login');
+Route::post('register', 'Auth\RegisterController@register');
+// Route::post('logout', 'Auth\LoginController@logout');
+
+//Balance Order
+Route::post('storebalance','BalanceOrderController@store');
+
 
 Route::get('/welcome','WelcomeController@showapi');
 Route::get('/newsticker','NewstickerController@showapi');
 Route::get('/slider','SliderController@showapi');
 Route::get('/socail_media','SocailmediaController@showapi');
+
+Route::get('/payment','PaymentController@paymentProcess');
+
 
