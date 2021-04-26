@@ -62,8 +62,6 @@ class RegisterController extends Controller
         'nationality'=> 'required',
         'sex'=> 'required',
         'phone_number'=> 'required',
-        'user_type_id'=> 'required',
-        'status'=> 'required',
         'email' => 'required|email',
         'password' => 'required|string',
     ]);
@@ -83,8 +81,8 @@ class RegisterController extends Controller
                 'sex' => $request->sex,
                 'email' => $request->email,
                 'phone_number' => $request->phone_number,
-                'user_type_id' =>$request->user_type_id,
-                'status' => $request->status,
+                'user_type_id' =>'1',
+                'status' => 'active',
                 'password' =>bcrypt($request->password),
                 'api_token' => hash('sha256', $token),
                
