@@ -31,8 +31,12 @@ Route::post('register', 'Auth\RegisterController@register');
 // Route::post('logout', 'Auth\LoginController@logout');
 
 //Balance Order
-Route::post('storebalance','BalanceOrderController@store');
-
+Route::post('packages', 'BalancePackageController@showBalancePackageApi');
+Route::post('balance_order', 'BalanceOrderController@charge');
+//Bill Order
+Route::post('bill_order', 'BillOrderController@charge');
+//Vendor
+Route::post('vendor_request','Admin\VendorController@vendor_request');
 
 Route::get('/welcome','WelcomeController@showapi');
 Route::get('/newsticker','NewstickerController@showapi');
@@ -41,4 +45,4 @@ Route::get('/socail_media','SocailmediaController@showapi');
 
 Route::get('/payment','PaymentController@paymentProcess');
 
-
+Route::post('/verify', 'VerifyController@VerifyEmail');

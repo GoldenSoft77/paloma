@@ -21,7 +21,7 @@
           <!-- Add New Slide Btn -->
           <div class="col-12 mb-3">
             <h5> Balance Packages: 
-              <a href="{{ url('/balancepackages/add') }}" class="custom-link text-right">
+              <a href="{{ url('admin/balancepackages/add') }}" class="custom-link text-right">
                 <i class="fas fa-plus"></i> Add New Balance Package:
               </a>
             </h5>
@@ -39,7 +39,7 @@
 			  <p>{{ $balancepackage->company }}</p>
               <ul>
                 <li>
-                  <a href="{{ url('/balancepackages/edit/'.$balancepackage->id) }}">
+                  <a href="{{ url('admin/balancepackages/edit/'.$balancepackage->id) }}">
                     <i class="fas fa-pencil-alt"></i>
                   </a>
                 </li>
@@ -80,7 +80,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<form method="POST" action="{{url('/balancepackages/delete/'.$balancepackage->id)}}">
+					<form method="POST" action="{{url('admin/balancepackages/delete/'.$balancepackage->id)}}">
 						@csrf
 						@method('DELETE')
 						<p>Are you sure you want to delete?</p>

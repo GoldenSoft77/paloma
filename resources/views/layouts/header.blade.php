@@ -109,25 +109,25 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{ url('/welcome_page') }}" class="nav-link">
+                <a href="{{ url('/admin/welcome_page') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Welcome Page Content</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ url('/slider') }}" class="nav-link">
+                <a href="{{ url('/admin/slider') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Slider</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ url('/animated_bar') }}" class="nav-link">
+                <a href="{{ url('/admin/animated_bar') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Ainmated ticker</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ url('/socail_media') }}" class="nav-link">
+                <a href="{{ url('/admin/socail_media') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Social Media Links</p>
                 </a>
@@ -144,31 +144,31 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/vendors" class="nav-link">
+                <a href="/admin/vendors" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>All Vendors</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/products" class="nav-link">
+                <a href="/admin/products" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Vendors Products</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/pending_vendors" class="nav-link">
+                <a href="/admin/pending_vendors" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Pending Vendors</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/pending_products" class="nav-link">
+                <a href="/admin/pending_products" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Pending Products</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/productsections" class="nav-link">
+                <a href="/admin/productsections" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Product Section</p>
                 </a>
@@ -193,19 +193,19 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/admin/mtn_balanceorders" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>MTN Pending Orders</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/admin/syriatel_balanceorders" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Syriatel Pending Orders</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/admin/balanceorders" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Finished Orders</p>
                 </a>
@@ -222,25 +222,25 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/admin/pending_electricity" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Electricity Pending Orders</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/admin/pending_water" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Water Pending Orders</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/admin/pending_phone" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Phone Pending Orders</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/admin/billorders" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Finished Orders</p>
                 </a>
@@ -317,7 +317,7 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{ route('admin.logout') }}" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Logout

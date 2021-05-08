@@ -15,12 +15,19 @@
           </div>
           <!-- /.card-header -->
           <!-- form start -->
-          <form action="{{ url('/animated_bar/store') }}" method="post" enctype="multipart/form-data">
+          <form action="{{ url('admin/animated_bar/store') }}" method="post" enctype="multipart/form-data">
             {{ csrf_field() }}
             <div class="card-body">
               <div class="form-group">
-                <label>The Sentence *</label>
-                <input type="text" class="form-control @error('sentence') is-invalid @enderror" name="sentence" required>
+                <label>The Sentence (English) *</label>
+                <input type="text" class="form-control @error('sentence') is-invalid @enderror" name="sentence_en" required>
+                @if ($errors->has('sentence'))
+                    <span class="text-danger">{{ $errors->first('sentence') }}</span>
+                @endif
+              </div>
+              <div class="form-group">
+                <label>The Sentence (Arabic) *</label>
+                <input type="text" class="form-control @error('sentence') is-invalid @enderror" name="sentence_ar" required>
                 @if ($errors->has('sentence'))
                     <span class="text-danger">{{ $errors->first('sentence') }}</span>
                 @endif

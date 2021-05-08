@@ -21,7 +21,7 @@
           <!-- Add New Slide Btn -->
           <div class="col-12 mb-3">
             <h5> Animted Bar Sentences:          
-              <a href="{{ url('/animated_bar/create') }}" class="custom-link text-right">
+              <a href="{{ url('admin/animated_bar/create') }}" class="custom-link text-right">
                 <i class="fas fa-plus"></i> Add New Sentence
               </a>
             </h5>
@@ -36,7 +36,7 @@
               <p>{{ $sentence->sentencs }}</p>
               <ul>
                 <li>
-                  <a href="{{ url('/animated_bar/edit/'.$sentence->id) }}">
+                  <a href="{{ url('admin/animated_bar/edit/'.$sentence->id) }}">
                     <i class="fas fa-pencil-alt"></i>
                   </a>
                 </li>
@@ -77,7 +77,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<form method="POST" action="{{url('/animated_bar/delete/'.$sentence->id)}}">
+					<form method="POST" action="{{url('admin/animated_bar/delete/'.$sentence->id)}}">
 						@csrf
 						@method('DELETE')
 						<p>Are you sure you want to delete?</p>

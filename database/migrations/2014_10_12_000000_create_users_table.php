@@ -21,12 +21,15 @@ class CreateUsersTable extends Migration
             $table->string('country');
             $table->string('nationality');
             $table->string('sex');
-            $table->integer('phone_number');
+            $table->string('phone_number')->unique();
             $table->integer('user_type_id');
             $table->string('status');
             $table->string('email')->unique();
+            $table->integer('email_verified')->default(0);
+            $table->string('email_verification_token');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('profile_img')->nullable();
             $table->string('api_token', 80)->unique()->nullable()->default(null);
             $table->rememberToken();
             $table->timestamps();

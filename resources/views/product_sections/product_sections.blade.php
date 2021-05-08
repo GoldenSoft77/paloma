@@ -21,7 +21,7 @@
           <!-- Add New Slide Btn -->
           <div class="col-12 mb-3">
             <h5> Product Sections
-              <a href="{{ url('/productsections/add') }}" class="custom-link text-right">
+              <a href="{{ url('admin/productsections/add') }}" class="custom-link text-right">
                 <i class="fas fa-plus"></i> Add New Product Section
               </a>
             </h5>
@@ -38,7 +38,7 @@
              
               <ul>
                 <li>
-                  <a href="{{ url('/productsections/edit/'.$product_section->id) }}">
+                  <a href="{{ url('admin/productsections/edit/'.$product_section->id) }}">
                     <i class="fas fa-pencil-alt"></i>
                   </a>
                 </li>
@@ -79,7 +79,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<form method="POST" action="{{url('/productsections/delete/'.$product_section->id)}}">
+					<form method="POST" action="{{url('admin/productsections/delete/'.$product_section->id)}}">
 						@csrf
 						@method('DELETE')
 						<p>Are you sure you want to delete?</p>

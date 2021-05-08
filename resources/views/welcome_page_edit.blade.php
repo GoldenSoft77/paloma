@@ -23,19 +23,33 @@
           </div>
           <!-- /.card-header -->
           <!-- form start -->
-          <form action="{{ url('/welcome_page/update/'.$welcome->id) }}" method="post" enctype="multipart/form-data">
+          <form action="{{ url('admin/welcome_page/update/'.$welcome->id) }}" method="post" enctype="multipart/form-data">
             {{ csrf_field() }}
             <div class="card-body">
-              <div class="form-group">
-                <label>Title *</label>
-                <input type="text" class="form-control @error('slide_title') is-invalid @enderror" name="slide_title" value="{{ $welcome->title }}" required>
+            <div class="form-group">
+                <label>Title (English)*</label>
+                <input type="text" class="form-control @error('slide_title') is-invalid @enderror" name="slide_title_en" required value="{{ $welcome->translate('en')->title }}">
                 @if ($errors->has('slide_title'))
                     <span class="text-danger">{{ $errors->first('slide_title') }}</span>
                 @endif
               </div>
               <div class="form-group">
-                <label>Paragraph *</label>
-                <input type="text" class="form-control @error('slide_para') is-invalid @enderror" name="slide_para" value="{{ $welcome->paragraph }}" required>
+                <label>Title (Arabic)*</label>
+                <input type="text" class="form-control @error('slide_title') is-invalid @enderror" name="slide_title_ar" required value="{{ $welcome->translate('ar')->title }}">
+                @if ($errors->has('slide_title'))
+                    <span class="text-danger">{{ $errors->first('slide_title') }}</span>
+                @endif
+              </div>
+              <div class="form-group">
+                <label>Paragraph (English) *</label>
+                <input type="text" class="form-control @error('slide_para') is-invalid @enderror" name="slide_paragraph_en" required value="{{ $welcome->translate('en')->paragraph }}">
+                @if ($errors->has('slide_para'))
+                    <span class="text-danger">{{ $errors->first('slide_para') }}</span>
+                @endif
+              </div>
+              <div class="form-group">
+                <label>Paragraph (Arabic) *</label>
+                <input type="text" class="form-control @error('slide_para') is-invalid @enderror" name="slide_paragraph_ar" required  value="{{ $welcome->translate('ar')->paragraph }}">
                 @if ($errors->has('slide_para'))
                     <span class="text-danger">{{ $errors->first('slide_para') }}</span>
                 @endif

@@ -3,9 +3,15 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
+use Astrotomic\Translatable\Translatable;
+
 
 class Welcome extends Model
 {
-    protected $table = 'welcome';
-    protected $fillable = ['img','title','paragraph'];
+    use Translatable;
+    protected $table = 'welcomes';
+    protected $fillable = ['img'];
+    public $translatedAttributes = ['title','paragraph'];
+  
 }

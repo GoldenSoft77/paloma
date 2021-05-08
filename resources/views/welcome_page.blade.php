@@ -21,7 +21,7 @@
           <!-- Add New Slide Btn -->
           <div class="col-12 mb-3">
             <h5> Welcome page slides:          
-              <a href="{{ url('/welcome_page/create') }}" class="custom-link text-right">
+              <a href="{{ url('admin/welcome_page/create') }}" class="custom-link text-right">
                 <i class="fas fa-plus"></i> Add New Slide
               </a>
             </h5>
@@ -34,11 +34,22 @@
           <div class="col-md-4 col-sm-6 col-12 mb-3">
             <div class="single-box">
               <img src="{{ asset($wel->img) }}" class="img-fluid">
-              <h2>{{ substr($wel->title, 0, 50) }}</h2>
-              <p>{{ substr($wel->paragraph, 0, 100) }}</p>
+              @php
+              $en_title = $wel->translate('en')->title;
+              $ar_title = $wel->translate('ar')->title;
+
+              $en_para=$wel->translate('en')->paragraph;
+              $ar_para=$wel->translate('ar')->paragraph;
+
+              @endphp
+              <h2>{{substr($en_title,0,50)}} </h2>
+              <h2>{{substr($ar_title,0,50)}} </h2>
+              
+              <p>{{ substr($en_para, 0, 100) }}</p>
+              <p>{{ substr($ar_para, 0, 100) }}</p>
               <ul>
                 <li>
-                  <a href="{{ url('/welcome_page/edit/'.$wel->id) }}">
+                  <a href="{{ url('admin/welcome_page/edit/'.$wel->id) }}">
                     <i class="fas fa-pencil-alt"></i>
                   </a>
                 </li>
@@ -79,7 +90,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<form method="POST" action="{{url('/welcome_page/delete/'.$wel->id)}}">
+					<form method="POST" action="{{url('admin/welcome_page/delete/'.$wel->id)}}">
 						@csrf
 						@method('DELETE')
 						<p>Are you sure you want to delete?</p>

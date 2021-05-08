@@ -14,7 +14,7 @@
           </div>
           <!-- /.card-header -->
           <!-- form start -->
-          <form action="{{ url('/productsections/update/'. $product_section->id) }}" method="post" enctype="multipart/form-data">
+          <form action="{{ url('admin/productsections/update/'. $product_section->id) }}" method="post" enctype="multipart/form-data">
           {{ csrf_field() }}
   <div class="card-body">
               <div class="form-group">

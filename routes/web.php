@@ -16,13 +16,29 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('index');
 // });
+Route::get('/verify/{token}', 'VerifyController@VerifyEmail')->name('verify');
 
 Auth::routes(['verify' => true]);
 Route::group(['middleware' => 'auth'], function () {
 
 Route::get('/home', 'HomeController@index')->name('home');
 });
-//Balance Packages Orders
+
+//Admin Routes
+
+
+
+
+Route::namespace("Admin")->prefix('admin')->group(function(){
+    Route::get('/', 'HomeController@index')->name('admin.home');
+  // Welcome Page
+  Route::get('/welcome_page', 'WelcomeController@index');
+  Route::get('/welcome_page/create', 'WelcomeController@create');
+  Route::post('/welcome_page/store', 'WelcomeController@store');
+  Route::delete('/welcome_page/delete/{id}', 'WelcomeController@destroy');
+  Route::get('/welcome_page/edit/{id}', 'WelcomeController@edit');
+  Route::post('/welcome_page/update/{id}', 'WelcomeController@update');
+//Balance Packages 
 Route::get('/balancepackages', 'BalancePackageController@index');
 Route::get('/balancepackages/add', 'BalancePackageController@create');
 Route::get('/balancepackages/edit/{id}', 'BalancePackageController@edit');
@@ -31,14 +47,18 @@ Route::post('/balancepackages/store', 'BalancePackageController@store');
 Route::post('/balancepackages/update/{id}', 'BalancePackageController@update');
 Route::delete('/balancepackages/delete/{id}', 'BalancePackageController@destroy');
 
+//Balance Orders 
+Route::get('/balanceorders', 'BalanceOrderController@finish_orders');
+Route::get('/mtn_balanceorders', 'BalanceOrderController@pending_mtn');
+Route::get('/syriatel_balanceorders', 'BalanceOrderController@pending_syriatel');
+Route::get('/balanceorders/charge/{id}', 'BalanceOrderController@charge_balance');
+//Bill Orders 
+Route::get('/billorders', 'BillOrderController@finish_orders');
+Route::get('/pending_electricity', 'BillOrderController@pending_electricity');
+Route::get('/pending_water', 'BillOrderController@pending_water');
+Route::get('/pending_phone', 'BillOrderController@pending_phone');
+Route::get('/billorders/approve/{id}', 'BillOrderController@approve_bill');
 
-// Welcome Page
-Route::get('/welcome_page', 'WelcomeController@index');
-Route::get('/welcome_page/create', 'WelcomeController@create');
-Route::post('/welcome_page/store', 'WelcomeController@store');
-Route::delete('/welcome_page/delete/{id}', 'WelcomeController@destroy');
-Route::get('/welcome_page/edit/{id}', 'WelcomeController@edit');
-Route::post('/welcome_page/update/{id}', 'WelcomeController@update');
 
 //Slider
 Route::get('/slider', 'SliderController@index');
@@ -59,7 +79,6 @@ Route::get('/socail_media','SocailmediaController@index');
 Route::post('/socail_media/update','SocailmediaController@update');
 
 //Vendors
-Route::get('/vendorRequest','VendorController@vendor_request');
 Route::get('/pending_vendors','VendorController@pending');
 Route::get('/vendors','VendorController@index');
 Route::get('/vendors/approve/{id}', 'VendorController@approve_vendor');
@@ -80,5 +99,13 @@ Route::post('/productsections/update/{id}', 'ProductSectionController@update');
 Route::delete('/productsections/delete/{id}', 'ProductSectionController@destroy');
 
 
+    Route::namespace('Auth')->group(function(){
+    Route::get('/login', 'LoginController@showLoginForm')->name('admin.login');
+    Route::post('/login', 'LoginController@login');
+    Route::post('logout', 'LoginController@logout')->name('admin.logout');
+  
+    });
+   });
+
 Route::get('stripe', 'StripePaymentController@stripe');
-Route::post('stripe', 'StripePaymentController@stripePost')->name('stripe.post');
+Route::post('charge', 'BalanceOrderController@charge');

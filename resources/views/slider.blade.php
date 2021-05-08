@@ -21,7 +21,7 @@
           <!-- Add New Slide Btn -->
           <div class="col-12 mb-3">
             <h5> Slider images:          
-              <a href="{{ url('/slider/create') }}" class="custom-link text-right">
+              <a href="{{ url('admin/slider/create') }}" class="custom-link text-right">
                 <i class="fas fa-plus"></i> Add New Slide
               </a>
             </h5>

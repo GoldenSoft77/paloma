@@ -2,13 +2,14 @@
 
 namespace App;
 
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-
-class User extends Authenticatable
+use App\Notifications\VerifyApiEmail;
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
+
 
     /**
      * The attributes that are mass assignable.
@@ -16,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name','last_name','date_birth','country','nationality','sex','email', 'password','phone_number','user_type_id','status','api_token'
+        'first_name','last_name','date_birth','country','nationality','sex','email', 'password','phone_number','email_verified','email_verification_token','profile_img','user_type_id','status','api_token'
     ];
 
     /**
@@ -36,4 +37,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function sendApiEmailVerificationNotification()
+    {
+    $this->notify(new VerifyApiEmail); // my notification
+    }
 }

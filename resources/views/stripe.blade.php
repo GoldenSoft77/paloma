@@ -50,18 +50,23 @@
   
                     <form 
                             role="form" 
-                            action="{{ route('stripe.post') }}" 
+                            action="/charge" 
                             method="post" 
                             class="require-validation"
                             data-cc-on-file="false"
-                            data-stripe-publishable-key="pk_test_51IiI5nEg8ppfY3tV6SGTLG1MphHhu5deM08rNx0gpFriUfTJhXR1bUySqPD2BVvQDxVv9Mlw05JjkSX51cbZ8DeM00VrgPWblp"
                             id="payment-form">
                         @csrf
   
                         <div class='form-row row'>
                             <div class='col-xs-12 form-group required'>
                                 <label class='control-label'>Name on Card</label> <input
-                                    class='form-control' size='4' type='text' name="first_name">
+                                    class='form-control' size='4' type='email' name="email">
+                            </div>
+                        </div>
+                        <div class='form-row row'>
+                            <div class='col-xs-12 form-group required'>
+                                <label class='control-label'>Name </label> <input
+                                    class='form-control' size='4' type='text' name="api_token">
                             </div>
                         </div>
   
@@ -89,6 +94,28 @@
                                     class='form-control card-expiry-year' placeholder='YYYY' size='4'
                                     type='text' name="exp_year">
                             </div>
+                          
+                        </div>
+                        <div class='form-row row'>
+                            <div class='col-xs-12 form-group card required'>
+                                <label class='control-label'>Amount</label> <input
+                                    autocomplete='off' class='form-control card-number' size='20'
+                                    type='text' name="amount">
+                            </div>
+                        </div>
+                        <div class='form-row row'>
+                            <div class='col-xs-12 form-group card required'>
+                                <label class='control-label'>Package</label> <input
+                                    autocomplete='off' class='form-control card-number' size='20'
+                                    type='text' name="package_id">
+                            </div>
+                        </div>
+                        <div class='form-row row'>
+                            <div class='col-xs-12 form-group card required'>
+                                <label class='control-label'>Phone Number</label> <input
+                                    autocomplete='off' class='form-control card-number' size='20'
+                                    type='text' name="phone_number">
+                            </div>
                         </div>
   
                         <div class='form-row row'>
@@ -100,7 +127,7 @@
   
                         <div class="row">
                             <div class="col-xs-12">
-                                <button class="btn btn-primary btn-lg btn-block" type="submit">Pay Now ($100)</button>
+                                <button class="btn btn-primary btn-lg btn-block" type="submit">Pay</button>
                             </div>
                         </div>
                           
@@ -116,60 +143,4 @@
   
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
   
-<script type="text/javascript">
-$(function() {
-   
-    var $form         = $(".require-validation");
-   
-    $('form.require-validation').bind('submit', function(e) {
-        var $form         = $(".require-validation"),
-        inputSelector = ['input[type=email]', 'input[type=password]',
-                         'input[type=text]', 'input[type=file]',
-                         'textarea'].join(', '),
-        $inputs       = $form.find('.required').find(inputSelector),
-        $errorMessage = $form.find('div.error'),
-        valid         = true;
-        $errorMessage.addClass('hide');
-  
-        $('.has-error').removeClass('has-error');
-        $inputs.each(function(i, el) {
-          var $input = $(el);
-          if ($input.val() === '') {
-            $input.parent().addClass('has-error');
-            $errorMessage.removeClass('hide');
-            e.preventDefault();
-          }
-        });
-   
-        if (!$form.data('cc-on-file')) {
-          e.preventDefault();
-          Stripe.setPublishableKey($form.data('stripe-publishable-key'));
-          Stripe.createToken({
-            number: $('.card-number').val(),
-            cvc: $('.card-cvc').val(),
-            exp_month: $('.card-expiry-month').val(),
-            exp_year: $('.card-expiry-year').val()
-          }, stripeResponseHandler);
-        }
-  
-  });
-  
-  function stripeResponseHandler(status, response) {
-        if (response.error) {
-            $('.error')
-                .removeClass('hide')
-                .find('.alert')
-                .text(response.error.message);
-        } else {
-            /* token contains id, last4, and card type */
-            var token = response['id'];
-               
-            $form.find('input[type=text]').empty();
-            $form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
-            $form.get(0).submit();
-        }
-    }
-   
-});
-</script>
 </html>

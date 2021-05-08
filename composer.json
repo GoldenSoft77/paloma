@@ -9,13 +9,15 @@
     "license": "MIT",
     "require": {
         "php": "^7.2.5",
+        "astrotomic/laravel-translatable": "^11.9",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^6.3",
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.4",
-        "stripe/stripe-php": "^7.77"
+        "stripe/stripe-php": "^7.77",
+        "twilio/sdk": "^6.22"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

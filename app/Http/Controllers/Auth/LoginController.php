@@ -43,16 +43,22 @@ class LoginController extends Controller
 
 
     public function login(Request $request){ 
-
+      
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){ 
             $user = Auth::user(); 
+            if($user->email_verified == 1){
             $success['token'] =  $user->api_token; 
             $success['user'] = $user;
             return response()->json(['code' => 1,"data"=>$success], 200); 
-        } 
+            } 
+            else{
+                return response()->json(['code' => 0,"data"=>"Not Verified"], 401); 
+            }
+        }
         else{ 
             return response()->json(['code'=> 0,"data"=>'Unauthorized'], 401); 
         } 
+    
     }
    
     // public function logout()

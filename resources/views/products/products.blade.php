@@ -36,7 +36,7 @@
 			  <p>{{ $product->status }}</p>
         <ul>
               <li>
-                <a href="{{ url('/products/approve/'.$product->id) }}">
+                <a href="{{ url('admin/products/approve/'.$product->id) }}">
                   <i class="fas fa-check"></i>
                 </a>
               </li>
@@ -78,7 +78,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<form method="POST" action="{{url('/products/delete/'.$product->id)}}">
+					<form method="POST" action="{{url('admin/products/delete/'.$product->id)}}">
 						@csrf
 						@method('DELETE')
 						<p>Are you sure you want to delete?</p>
