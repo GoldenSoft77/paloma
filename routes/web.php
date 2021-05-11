@@ -109,3 +109,6 @@ Route::delete('/productsections/delete/{id}', 'ProductSectionController@destroy'
 
 Route::get('stripe', 'StripePaymentController@stripe');
 Route::post('charge', 'BalanceOrderController@charge');
+Route::get('/', function () {
+  return redirect('/admin/login');
+});

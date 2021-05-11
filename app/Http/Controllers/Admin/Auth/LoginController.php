@@ -42,9 +42,7 @@ class LoginController extends Controller
     public function showLoginForm(){
         return view('admin.auth.login');
     }
-    public function index(){
-        return redirect()->route('admin.login');
-    }
+
     /**
      * Log the user out of the application.
      *
