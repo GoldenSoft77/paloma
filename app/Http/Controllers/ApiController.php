@@ -171,7 +171,7 @@ class ApiController extends Controller
      public function vendor_request(Request $request) {
 
         $token = $request->api_token;
-        $user = User::where('api_token',$token)->where('user_type_id',1)->first();
+        $user = User::where('api_token',$token)->first();
        
 
         $data = [
@@ -263,7 +263,7 @@ class ApiController extends Controller
 
      //Show All Products 
      public function all_products(Request $request){
-        $products = Product::all();
+        $products = Product::where('status','active')->get();
         return response()->json($products);
     }
 
