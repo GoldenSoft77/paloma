@@ -9,10 +9,11 @@ use App\Vendor;
 class VendorController extends Controller
 {
 
-    // public function __construct()
-    // {
-    //     $this->middleware('auth:admin');
-    // }
+    public function __construct()
+     {
+        $this->middleware('auth:admin');
+    }
+
     //Show all Vendors
     public function index()
     {
@@ -45,8 +46,9 @@ class VendorController extends Controller
 
     //Admin approve request user to be vendor account
     public function approve_vendor(Request $request,$id) {
-
-        $user = User::where('id', $id )->first();
+        $vendor = Vendor::where('id', $id )->first();
+        $user_id = $vendor->user_id;
+        $user = User::where('id', $user_id )->first();
         $data = [
             'status' => 'active',
             'user_type_id' => '2',
@@ -56,31 +58,6 @@ class VendorController extends Controller
         return redirect('/admin/vendors')->with('message', 'Vendor Added Successfully');
 
     }
-
-    //API
-
-    //User request to be vendor account
-    public function vendor_request(Request $request) {
-
-        $token = $request->api_token;
-        $user = User::where('api_token',$token)->where('user_type_id',1)->first();
-       
-
-        $data = [
-            'status' => 'vendor_pending',
-        ];
-        Vendor::insert( [
-            'user_id'=> $user->id,
-            'shop_name'=>  $request->shop_name,
-            'shop_phone_number'=> $request->shop_phone_number,
-            'shop_address'=> $request->shop_address
-        ]);
-      
-        $user->update($data);
-        return response()->json([
-            "message" => "Vendor Request Created"
-        ], 201);
-    }
-
+   
     
 }

@@ -33,7 +33,7 @@
            
               <h2>{{ $product->name }}</h2>
               <p>{{ $product->price }}</p>
-			  <p>{{ $product->status }}</p>
+			        <p>{{ $product->status }}</p>
         <ul>
               <li>
                 <a href="{{ url('admin/products/approve/'.$product->id) }}">

@@ -55,9 +55,5 @@ class SliderController extends Controller
         return redirect('slider')->with('message','The Slide has been removed successfully');
     }
 
-    //API
-    public function showapi(){
-        $slides = Slider::all();
-        return response()->json($slides);
-    }
+   
 }

@@ -123,9 +123,5 @@ class WelcomeController extends Controller
         return redirect('admin/welcome_page')->with('message','The Slide has been removed successfully');
     }
 
-    //API
-    public function showapi(){
-        $welcome = Welcome::all();
-        return response()->json($welcome);
-    }
+  
 }

@@ -37,9 +37,5 @@ class SocailmediaController extends Controller
 
     }
 
-    //API
-    public function showapi(){
-        $socailmedia = Socailmedia::first();
-        return response()->json($socailmedia);
-    }
+   
 }

@@ -65,22 +65,20 @@ class ProductController extends Controller
         $product = Product::where('id',$id)->first();
 
         $data = [
-            'status' => 'active',
+             'status' => 'active',
         ];
-      
+        
         $product->update($data);
-        return response()->json([
-            "message" => "Active product"
-        ], 201);
+        return redirect('/admin/products')->with('message','The Product has been Added successfully');
+
     }
-  //Admin approve Delete Product
-  public function approve_product_delete(Request $request,$id) {
+     //Admin approve Delete Product
+    public function approve_product_delete(Request $request,$id) {
 
-    $product = Product::where('id',$id)->delete();
+        $product = Product::where('id',$id)->delete();
 
-    return redirect('products')->with('message','The Product has been removed successfully');
-  
-}
+        return redirect('/admin/products')->with('message','The Product has been removed successfully');
+    }
 
    
    

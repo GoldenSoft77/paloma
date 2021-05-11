@@ -317,12 +317,15 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a href="{{ route('admin.logout') }}" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Logout
-              </p>
-            </a>
+          <a class="dropdown-item" href="{{ route('admin.logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+ 
+                                    <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
           </li>
 
         </ul>

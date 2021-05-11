@@ -31,17 +31,24 @@ Route::post('register', 'Auth\RegisterController@register');
 // Route::post('logout', 'Auth\LoginController@logout');
 
 //Balance Order
-Route::post('packages', 'BalancePackageController@showBalancePackageApi');
-Route::post('balance_order', 'BalanceOrderController@charge');
+Route::post('packages', 'ApiController@showBalancePackage');
+Route::post('balance_order', 'ApiController@charge_balance');
 //Bill Order
-Route::post('bill_order', 'BillOrderController@charge');
+Route::post('bill_order', 'ApiController@charge_bill');
 //Vendor
-Route::post('vendor_request','Admin\VendorController@vendor_request');
+Route::post('vendor_request','ApiController@vendor_request');
+//Products
+Route::post('product_request','ApiController@add_product');
+Route::post('my_products','ApiController@my_products');
+Route::post('all_products','ApiController@all_products');
+Route::post('delete_product','ApiController@delete_product');
+Route::post('product_sections','ApiController@product_sections');
 
-Route::get('/welcome','WelcomeController@showapi');
-Route::get('/newsticker','NewstickerController@showapi');
-Route::get('/slider','SliderController@showapi');
-Route::get('/socail_media','SocailmediaController@showapi');
+
+Route::get('/welcome','ApiController@show_welcome');
+Route::get('/newsticker','ApiController@show_newsticker');
+Route::get('/slider','ApiController@show_slider');
+Route::get('/socail_media','ApiController@show_socialmedia');
 
 Route::get('/payment','PaymentController@paymentProcess');
 

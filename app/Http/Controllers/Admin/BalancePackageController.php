@@ -67,12 +67,6 @@ class BalancePackageController extends Controller
         return redirect('balancepackages')->with('message','The Package has been removed successfully');
     }
 
-    //API For Balance Packages
-    public function showBalancePackageApi(Request $request){
-      
-        $balance_package = BalancePackage::where('company',$request->company)->get();
-        $success['balance_package'] = $balance_package;
-        return response()->json(['code' => 1,"data"=>$success], 200);
-    }
+   
    
 }

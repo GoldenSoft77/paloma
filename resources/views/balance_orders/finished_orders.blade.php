@@ -25,16 +25,16 @@
         </div>
         <!-- ./Add New Slide Btn -->
 
-        @if (count($billorders) > 0)
+        @if (count($balanceorders) > 0)
 
-        @foreach ($billorders as $billorder)
+        @foreach ($balanceorders as $balanceorder)
         <div class="col-md-4 col-sm-6 col-12 mb-3">
           <div class="single-box">
          
-            <h3>Type: {{ $billorder->type }}</h3>
-            <p>Amount: {{ $billorder->amount }}</p>
-            <p>City: {{ $billorder->city }}</p>
-            <p>Date: {{ $billorder->created_at->format('Y-m-d') }}</p>
+          <h3>Number: {{ $balanceorder->phone_number }}</h3>
+              <p>Units: {{ $balanceorder->packages->units }}</p>
+              <p>Units: {{ $balanceorder->packages->company }}</p>
+            <p>Date: {{ $balanceorder->created_at->format('Y-m-d') }}</p>
            
           </div>
         </div>

@@ -68,59 +68,6 @@ class BalanceOrderController extends Controller
     }
 
 
-    //API
-    public function charge(Request $request)
-    {
-       
-        $user = User::where('api_token', $request->api_token)->first();
-      
-        try {
-            Stripe::setApiKey("sk_test_51IiI5nEg8ppfY3tVlFyNLUslq1OMTOAhd6YEGy0eUK6eplZP6claaBQFf8gWii9RzjipvjiOja0gyshgiVymbfyE00PfH3sJu8");
-        
-            $token = Token::create([
-                        'card' => [
-                              'number'    => $request->card_number,
-                               'exp_month' =>$request->exp_month,
-                               'exp_year'  => $request->exp_year,
-                                'cvc'       => $request->cvc,
-                           ]
-                        ]);
-           
-            $customer = Customer::create(array(
-                'email' => $user->email,
-                'source' => $token->id
-            ));
-
-        
-            $charge = Charge::create(array(
-                'customer' => $customer->id,
-                'amount' => $request->amount,
-                'currency' => 'usd'
-            ));
-           
-            $status_msg= $charge->status;
-             
-              if($status_msg == "succeeded"){
-                $status_msg ="Authorised";
-                $status_code = "A";
-                $data = [
-                 'user_id' => $user->id,
-                  'package_id' => $request->package_id,
-                  'phone_number' => $request->phone_number,
-                   'status' => 'pending',
-                            ];
-                          
-                 $balance_order = BalanceOrder::create($data);
-                 return response()->json(['code' => 1,"data"=>"Your order is submit successfully"], 200);
-            }else{
-                $status_code = "D";
-                return response()->json(['code' => 0,"data"=>"Your order is Failed"], 401);
-            }
-        
-          
-        } catch (\Exception $ex) {
-            return $ex->getMessage();
-        }
-    }
+  
 
 }

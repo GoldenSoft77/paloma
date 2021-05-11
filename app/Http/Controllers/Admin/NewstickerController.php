@@ -93,9 +93,5 @@ class NewstickerController extends Controller
         return redirect('/admin/animated_bar')->with('message','The Sentence has been removed successfully');
     }
 
-    //API
-    public function showapi(){
-        $bars = Newsticker::all();
-        return response()->json($bars);
-    }
+   
 }
