@@ -33,7 +33,7 @@ class SocailmediaController extends Controller
 
         $socailmedia->save();
 
-        return redirect('socail_media')->with('message','The links has been edited successfully');
+        return redirect('/admin/socail_media')->with('message','The links has been edited successfully');
 
     }
 

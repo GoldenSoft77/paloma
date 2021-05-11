@@ -64,7 +64,7 @@ class BalancePackageController extends Controller
     {
         $balance_package = BalancePackage::where('id',$id)->delete();
 
-        return redirect('balancepackages')->with('message','The Package has been removed successfully');
+        return redirect('/admin/balancepackages')->with('message','The Package has been removed successfully');
     }
 
    

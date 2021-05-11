@@ -45,7 +45,7 @@ class ProductSectionController extends Controller
 
       
         $product_section = ProductSection::create($data);
-        return redirect('productsections')->with('message','New Product Section has been added successfully');
+        return redirect('/admin/productsections')->with('message','New Product Section has been added successfully');
     }
     //Edit a specific Product Section
     public function edit($id)
@@ -74,7 +74,7 @@ class ProductSectionController extends Controller
 
         $product_section->update($data);
 
-        return redirect("productsections")->with('message', 'Product Section has been updated successfully');
+        return redirect('/admin/productsections')->with('message', 'Product Section has been updated successfully');
 
     }
     //Delete a specific Product Section
@@ -82,7 +82,7 @@ class ProductSectionController extends Controller
     {
         $product_section = ProductSection::where('id',$id)->delete();
 
-        return redirect('productsections')->with('message','The Product Section has been removed successfully');
+        return redirect('/admin/productsections')->with('message','The Product Section has been removed successfully');
     }
 
     //API For Product Section

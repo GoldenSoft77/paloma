@@ -45,14 +45,14 @@ class SliderController extends Controller
 
         Slider::create($data);
 
-        return redirect('slider')->with('message','New Slide has been added successfully');
+        return redirect('/admin/slider')->with('message','New Slide has been added successfully');
     }
 
     public function destroy($id)
     {
         $slides = Slider::where('id',$id)->delete();
 
-        return redirect('slider')->with('message','The Slide has been removed successfully');
+        return redirect('/admin/slider')->with('message','The Slide has been removed successfully');
     }
 
    

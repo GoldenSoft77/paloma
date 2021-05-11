@@ -63,7 +63,7 @@ class WelcomeController extends Controller
 
         Welcome::create($data);
 
-        return redirect('admin/welcome_page')->with('message','New Slide has been added successfully');
+        return redirect('/admin/welcome_page')->with('message','New Slide has been added successfully');
     }
 
     public function edit($id)
@@ -112,7 +112,7 @@ class WelcomeController extends Controller
         $welcome->update($data);
        
 
-        return redirect('admin/welcome_page/edit/'.$welcome->id)->with('message','The slide has been edited successfully');
+        return redirect('/admin/welcome_page/edit/'.$welcome->id)->with('message','The slide has been edited successfully');
 
     }
 
@@ -120,7 +120,7 @@ class WelcomeController extends Controller
     {
         $welcome = Welcome::where('id',$id)->delete();
 
-        return redirect('admin/welcome_page')->with('message','The Slide has been removed successfully');
+        return redirect('/admin/welcome_page')->with('message','The Slide has been removed successfully');
     }
 
   
