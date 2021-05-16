@@ -72,7 +72,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<form method="POST" action="{{url('/slider/delete/'.$slide->id)}}">
+					<form method="POST" action="{{url('/admin/slider/delete/'.$slide->id)}}">
 						@csrf
 						@method('DELETE')
 						<p>Are you sure you want to delete?</p>
