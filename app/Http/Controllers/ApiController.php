@@ -15,6 +15,7 @@ use App\ProductImage;
 use App\Socailmedia;
 use App\Slider;
 use App\Vendor;
+use App\Welcome;
 use Stripe\Stripe;
 use Stripe\Customer;
 use Stripe\Charge;

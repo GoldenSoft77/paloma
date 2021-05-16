@@ -33,7 +33,7 @@
          
           <h3>Number: {{ $balanceorder->phone_number }}</h3>
               <p>Units: {{ $balanceorder->packages->units }}</p>
-              <p>Units: {{ $balanceorder->packages->company }}</p>
+              <p>Company: {{ $balanceorder->packages->company }}</p>
             <p>Date: {{ $balanceorder->created_at->format('Y-m-d') }}</p>
            
           </div>

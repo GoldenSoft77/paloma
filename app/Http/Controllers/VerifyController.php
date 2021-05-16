@@ -31,7 +31,9 @@ class VerifyController extends Controller
 
        ]);
        
-       return response()->json(['code' => 1,"data"=>  "Your account is verified"], 200);
-       }
+       $success['user'] = $user;
+       
+       return response()->json(['code' => 1,"data"=> $success], 200);
+    }
     }
 }
