@@ -5,6 +5,9 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\Slider;
+use ImageOptimizer;
+use Spatie\ImageOptimizer\OptimizerChainFactory;
+
 
 class SliderController extends Controller
 {
@@ -39,6 +42,11 @@ class SliderController extends Controller
             $name=$file->getClientOriginalName();
             $name = $path.$name;
             $file->move($path,$name);
+            $optimizerChain = OptimizerChainFactory::create();
+
+           $optimizerChain->optimize('http://'.$_SERVER['HTTP_HOST'].'/'.$name);
+            
+           
             
             $data['img'] = $name;
         }

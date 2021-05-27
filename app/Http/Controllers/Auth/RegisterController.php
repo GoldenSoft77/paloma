@@ -131,7 +131,7 @@ class RegisterController extends Controller
             ]);
        $success['token'] =  $token; 
        $success['user'] = $user;
-       \Mail::to($user->email)->send(new VerificationEmail($user));
+    //    \Mail::to($user->email)->send(new VerificationEmail($user));
        // Auth::login($user);
           return response()->json(['code'=> 1,"data"=>'Email Verification has sent'], 200); 
 

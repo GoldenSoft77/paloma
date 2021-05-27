@@ -22,22 +22,42 @@
         <div class="col-12 mb-3">
           <h5> Finished Orders: 
           </h5>
-        </div>
+       
         <!-- ./Add New Slide Btn -->
 
         @if (count($billorders) > 0)
-
+        <table class="MakeDataTable display">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Type</th>
+                            <th>Amount</th>
+                            <th>User</th>
+                            <th>Date</th>
+                           
+                        </tr>
+                    </thead>
+                    <tbody>
         @foreach ($billorders as $billorder)
-        <div class="col-md-4 col-sm-6 col-12 mb-3">
-          <div class="single-box">
-         
-            <h3>Type: {{ $billorder->type }}</h3>
-            <p>Amount: {{ $billorder->amount }}</p>
-            <p>Date: {{ $billorder->created_at->format('Y-m-d') }}</p>
+        <tr>
+           <td>{{ $billorder->id }}</td>  
+           <td>{{ $billorder->type }}</td>
+           <td>{{ $billorder->amount }}</td>
+           @php
+                                $first_name = $billorder->user->first_name;
+                                $last_name = $billorder->user->last_name;
+                                $full_name = $first_name." ".$last_name;
+                                @endphp
+                                <td>
+                                  {{  $full_name }}
+                                </td>
+           <td>{{ $billorder->created_at->format('Y-m-d') }}</td>
            
-          </div>
-        </div>
-        @endforeach
+         </tr>           
+         @endforeach
+                    </tbody>
+                </table>
+
 
         @else
         <div class="col-12">
@@ -46,7 +66,7 @@
           </div>
         </div>  
         @endif
-
+        </div>
       </div>
     </div><!--/. container-fluid -->
   </section>

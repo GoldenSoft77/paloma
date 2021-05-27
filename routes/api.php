@@ -33,8 +33,16 @@ Route::post('register', 'Auth\RegisterController@register');
 //Balance Order
 Route::post('packages', 'ApiController@showBalancePackage');
 Route::post('balance_order', 'ApiController@charge_balance');
+Route::post('done_balance_orders', 'ApiController@done_balance_orders');
+Route::post('pending_balance_orders', 'ApiController@pending_balance_orders');
+
 //Bill Order
 Route::post('bill_order', 'ApiController@charge_bill');
+Route::post('pending_bill_orders', 'ApiController@pending_bill_orders');
+Route::post('done_bill_orders', 'ApiController@done_bill_orders');
+//Online Order
+Route::post('pending_online_orders', 'ApiController@pending_online_orders');
+Route::post('online_orders', 'ApiController@online_orders');
 //Vendor
 Route::post('vendor_request','ApiController@vendor_request');
 //Products
@@ -43,7 +51,8 @@ Route::post('my_products','ApiController@my_products');
 Route::post('all_products','ApiController@all_products');
 Route::post('delete_product','ApiController@delete_product');
 Route::post('product_sections','ApiController@product_sections');
-
+Route::post('online_new_order','ApiController@online_order_request');
+Route::post('charge_online_order','ApiController@charge_online_order');
 
 Route::get('/welcome','ApiController@show_welcome');
 Route::get('/newsticker','ApiController@show_newsticker');

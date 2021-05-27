@@ -88,6 +88,16 @@ Route::get('/products','ProductController@index');
 Route::get('/pending_products','ProductController@pending');
 Route::get('/products/approve/{id}', 'ProductController@approve_product');
 Route::delete('/products/delete/{id}', 'ProductController@approve_product_delete');
+Route::get('/products/add', 'ProductController@create');
+Route::post('/products/store', 'ProductController@store');
+
+//online store
+Route::get('/onlineorders','OnlineOrderController@index');
+Route::get('/pending_orders','OnlineOrderController@pending');
+Route::get('/onlineorders/edit/{id}', 'OnlineOrderController@edit');
+Route::post('/onlineorders/add_shipping/{id}', 'OnlineOrderController@add_shipping_cost');
+Route::get('/onlineorders/change/{id}', 'OnlineOrderController@change');
+Route::post('/onlineorders/change_status/{id}', 'OnlineOrderController@change_status');
 
 //Product Sections
 Route::get('/productsections', 'ProductSectionController@index');

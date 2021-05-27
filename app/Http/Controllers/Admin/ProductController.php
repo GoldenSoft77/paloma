@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
-
 use Illuminate\Http\Request;
 use App\Product;
+use App\ProductSection;
+use App\ProductImage;
+use App\Vendor;
 
 class ProductController extends Controller
 {
@@ -25,24 +27,58 @@ class ProductController extends Controller
         $pending_products = Product::where('status', 'pending' )->get();
         return view('products.pending_products',compact('pending_products'));
     }
+
+       //Add New Product
+       public function create()
+       {
+            $sections = ProductSection::all();
+            $vendors = Vendor::all();
+           return view('products.add_product',compact('sections','vendors'));
+       }
    
     //store New Product
     public function store(Request $request) {
       
         $data = [
-            'name' => $request->name,
-            'price ' => $request->price,
-            'description' => $request->description,
-            'count' => $request->count,
+            'name' => $request->product_name,
+            'price' => $request->product_price,
+            'description' => $request->product_desc,
+            'count' => $request->product_count,
             'status' => 'pending',
-            'section_id' => $request->section_id,
+            'section_id' => $request->product_section,
             'vendor_id' => $request->vendor_id,
         ];
       
-        $product = Product::create($data);
-        return response()->json([
-            "message" => "New Product Created"
-        ], 201);
+     // Product Main Image
+     if($request->file('img')){
+        $file = $request->file('img');
+        $path = 'images/product/';
+        $name = $file->getClientOriginalName();
+        $name = $path.$name;
+        $file -> move($path,$name);
+        $data['main_img'] = $name;
+    }
+    
+    $product = Product::create($data);
+    
+    // Product Secondary Images
+    if($request->file('images')){
+        $files = $request->file('images');
+        foreach($files as $file){
+            $path = 'images/'.$product->name.'/';
+            $name=$file->getClientOriginalName();
+            $name = $path.$name;
+            $file->move($path,$name);
+            ProductImage::insert( [
+                'img'=>  $name,
+                'product_id'=> $product->id
+            ]);
+            $images[]=$name;
+        }
+    }
+
+    return redirect('/admin/products')->with('message','The Product has been Added successfully');
+
       
     }
    

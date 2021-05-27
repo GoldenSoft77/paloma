@@ -21,6 +21,9 @@
           <!-- Add New Slide Btn -->
           <div class="col-12 mb-3">
             <h5> Vendor Products: 
+            <a href="{{ url('admin/products/add') }}" class="custom-link text-right">
+                <i class="fas fa-plus"></i> Add New Vendor Product 
+              </a>
             </h5>
           </div>
           <!-- ./Add New Slide Btn -->

@@ -24,39 +24,43 @@
                 
                 <!-- ./Add New Slide Btn -->
 
-                @if (count($balanceorders) > 0)
+                @if (count($orders) > 0)
                 <table class="MakeDataTable display">
                     <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Number</th>
-                            <th>Units</th>
-                            <th>Company</th>
-                            <th>User</th>
-                            <th>Date</th>
-                           
-                        </tr>
+                    <tr>
+                                <th>ID</th>
+                                <th>Status</th>
+                                <th>Amount</th>
+                               <!-- <th>User</th>  -->
+                               
+
+                            </tr>
                     </thead>
                     <tbody>
-                        @foreach ($balanceorders as $balanceorder)
+                        @foreach ($orders as $order)
                         <tr>
-                            <td>{{ $balanceorder->id }}</td>
-                            <td>{{ $balanceorder->phone_number }}</td>
-                            <td>{{ $balanceorder->packages->units }}</td>
-                            <td>{{ $balanceorder->packages->company }}</td>
-                            @php
-                                $first_name = $balanceorder->user->first_name;
-                                $last_name = $balanceorder->user->last_name;
-                                $full_name = $first_name." ".$last_name;
+                                <td>
+                                    {{ $order->id}}
+                                </td>
+                                <td>
+
+                                    {{ $order->status }}
+                                </td>
+
+                                <td>
+                                    {{ $order->amount }}
+                                </td>
+                               <!-- @php
+                                $first_name = $order->user->first_name;
+                                $last_name = $order->user->last_name;
+                                $full_name = $order." ".$last_name;
                                 @endphp
                                 <td>
                                   {{  $full_name }}
                                 </td>
-                            <td>{{ $balanceorder->created_at->format('Y-m-d') }}</td>
-                          
-                        </tr>
-
-
+                             
+                              -->
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>

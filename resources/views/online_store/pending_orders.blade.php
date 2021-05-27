@@ -19,58 +19,68 @@
 
                 <!-- Add New Slide Btn -->
                 <div class="col-12 mb-3">
-                    <h5> Electricity Pending Orders:
+                    <h5>Online Store Pending Orders:
                     </h5>
 
-                    <!-- ./Add New Slide Btn -->
 
-                    @if (count($billorders) > 0)
+                    @if (count($pending_orders) > 0)
+                    <!-- ./Add New Slide Btn -->
                     <table class="MakeDataTable display">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Name</th>
-                                <th>City</th>
-                                <th>Counter Number</th>
-                                <th>User</th>
-                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Amount</th>
+                                <!-- <th>User</th> -->
                                 <th>Action</th>
 
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($billorders as $billorder)
-
+                            @foreach ($pending_orders as $pending_order)
                             <tr>
-                                <td>{{ $billorder->id }}</td>
-                                <td>{{ $billorder->name }}</td>
-                                <td>{{ $billorder->city }}</td>
-                                <td>{{ $billorder->counter_number }}</td>
-                                @php
-                                $first_name = $billorder->user->first_name;
-                                $last_name = $billorder->user->last_name;
-                                $full_name = $first_name." ".$last_name;
+                                <td>
+                                    {{ $pending_order->id}}
+                                </td>
+                                <td>
+
+                                    {{ $pending_order->status }}
+                                </td>
+
+                                <td>
+                                    {{ $pending_order->amount }}
+                                </td>
+                                <!-- @php
+                                $first_name = $pending_order->user->first_name;
+                                $last_name = $pending_order->user->last_name;
+                                $full_name = $pending_order." ".$last_name;
                                 @endphp
                                 <td>
-                                    {{  $full_name }}
+                                  {{  $full_name }}
                                 </td>
-                                <td>{{ $billorder->created_at->format('Y-m-d') }}</td>
+                               -->
                                 <td>
 
-                                    <a href="{{ url('admin/billorders/approve/'.$billorder->id) }}">
-                                        <i class="fas fa-check"></i>
+                                    <a href="{{ url('admin/onlineorders/edit/'.$pending_order->id) }}">
+                                        <i class="fas fa-plus"></i>
+                                    </a>
+                                    &nbsp;
+                                    <a href="{{ url('admin/onlineorders/change/'.$pending_order->id) }}">
+                                        <i class="fas fa-eye"></i>
                                     </a>
                                 </td>
+
                             </tr>
+
+
                             @endforeach
                         </tbody>
                     </table>
 
-
                     @else
                     <div class="col-12">
                         <div class="alert alert-primary" role="alert">
-                            There is no Pending Electricity Orders right now!
+                            There is no Pending Orders right now!
                         </div>
                     </div>
                     @endif

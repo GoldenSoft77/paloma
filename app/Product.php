@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\ProductImage;
+use App\Vendor;
 
 class Product extends Model
 {
@@ -14,5 +15,11 @@ class Product extends Model
     public function images() {
         return $this->hasMany('App\ProductImage');
     }  
+
+    public function vendor()
+    {
+        return $this->belongsTo('App\Vendor');
+    }
+
 
 }

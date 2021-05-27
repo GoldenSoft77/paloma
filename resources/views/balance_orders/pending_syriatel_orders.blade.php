@@ -22,38 +22,68 @@
         <div class="col-12 mb-3">
           <h5> Syriatel Pending Orders: 
           </h5>
-        </div>
+      
         <!-- ./Add New Slide Btn -->
 
+       
+
+       
         @if (count($balanceorders) > 0)
+                    <!-- ./Add New Slide Btn -->
+                    <table class="MakeDataTable display">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Number</th>
+                                <th>Units</th>
+                                <th>User</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($balanceorders as $balanceorder)
+                            <tr>
+                                <td>
+                                    {{ $balanceorder->id}}
+                                </td>
+                                <td>
 
-        @foreach ($balanceorders as $balanceorder)
-        <div class="col-md-4 col-sm-6 col-12 mb-3">
-          <div class="single-box">
-         
-            <h3>Number: {{ $balanceorder->phone_number }}</h3>
-            <p>Units: {{ $balanceorder->packages->units }}</p>
-            <ul>
-            <li>
-              <a href="{{ url('admin/balanceorders/charge/'.$balanceorder->id) }}">
-                <i class="fas fa-check"></i>
-              </a>
-            </li>
-           
-          </ul>
-     
-          </div>
-        </div>
-        @endforeach
+                                    {{ $balanceorder->phone_number }}
+                                </td>
+                               
+                                <td>
+                                  {{ $balanceorder->packages->units }}
+                                </td>
+                                @php
+                                $first_name = $balanceorder->user->first_name;
+                                $last_name = $balanceorder->user->last_name;
+                                $full_name = $first_name." ".$last_name;
+                                @endphp
+                                <td>
+                                  {{  $full_name }}
+                                </td>
+                                <td>
 
-        @else
-        <div class="col-12">
-          <div class="alert alert-primary" role="alert">
-            There is no Pending Syriatel Orders right now!
-          </div>
-        </div>  
-        @endif
+                                    <a href="{{ url('admin/balanceorders/charge/'.$balanceorder->id) }}">
+                                        <i class="fas fa-check"></i>
+                                    </a>
+                                </td>
 
+                            </tr>
+
+
+                            @endforeach
+                        </tbody>
+                    </table>
+
+                    @else
+                    <div class="col-12">
+                        <div class="alert alert-primary" role="alert">
+                            There is no Pending Syriatel Orders right now!
+                        </div>
+                    </div>
+                    @endif
+      </div>
       </div>
     </div><!--/. container-fluid -->
   </section>

@@ -14,12 +14,15 @@ use App\ProductSection;
 use App\ProductImage;
 use App\Socailmedia;
 use App\Slider;
+use App\OnlineOrder;
+use App\OnlineOrderDetails;
 use App\Vendor;
 use App\Welcome;
 use Stripe\Stripe;
 use Stripe\Customer;
 use Stripe\Charge;
 use Stripe\Token;
+use DB;
 
 
 class ApiController extends Controller
@@ -32,7 +35,23 @@ class ApiController extends Controller
         $success['balance_package'] = $balance_package;
         return response()->json(['code' => 1,"data"=>$success], 200);
     }
+    //Show all Balance Pending Orders
+    public function pending_balance_orders(Request $request)
+    {
+        $user = User::where('api_token', $request->api_token)->first();
 
+        $pending_balance_orders = BalanceOrder::where('status', 'pending')->where('user_id',$user->id)->get();
+        return response()->json($pending_balance_orders);
+    }
+
+    //Show all Balance Done Orders
+    public function done_balance_orders(Request $request)
+    {        
+        $user = User::where('api_token', $request->api_token)->first();
+
+        $balance_orders = BalanceOrder::where('status', 'done')->where('user_id',$user->id)->get();
+        return response()->json($balance_orders);
+    }
     //Charge Balance Order
     public function charge_balance(Request $request)
     {
@@ -88,7 +107,23 @@ class ApiController extends Controller
         }
     }
 
+    //Show all Bill Pending Orders
+    public function pending_bill_orders(Request $request)
+    {
+        $user = User::where('api_token', $request->api_token)->first();
 
+        $pending_bill_orders = BillOrder::where('status', 'pending')->where('user_id',$user->id)->get();
+        return response()->json($pending_bill_orders);
+    }
+
+    //Show all Bill Done Orders
+    public function done_bill_orders(Request $request)
+    {      
+        $user = User::where('api_token', $request->api_token)->first();
+
+        $bill_orders = BillOrder::where('status', 'done')->where('user_id',$user->id)->get();
+        return response()->json($bill_orders);
+    }
      //Charge Bill Order
     public function charge_bill(Request $request)
     {
@@ -202,7 +237,8 @@ class ApiController extends Controller
     {
 
         $token = $request->api_token;
-        $user = User::where('api_token',$token)->where('user_type_id',2)->first();
+        $user = User::where('api_token',$token)->first();
+        if($user->user_type_id	== 2){
         $user_id = $user->id;
         $vendor = Vendor::where('user_id',$user_id)->first();
         // Product Main Image
@@ -248,6 +284,12 @@ class ApiController extends Controller
         return response()->json([
             "message" => "New Product Created"
         ], 201);
+    }
+    else{
+        return response()->json([
+            "message" => "You can not add product"
+        ], 401);
+    }
 
     }
 
@@ -258,14 +300,43 @@ class ApiController extends Controller
         $user_id = $user->id;
         $vendor = Vendor::where('user_id',$user_id)->first();
         $vendor_id = $vendor->id;
-        $products = Product::where('vendor_id',$vendor_id)->get();
-        return response()->json($products);
+        $products = Product::where('status','active')->with('vendor')->get();
+
+        $products->map(function ($item, $key) {
+            
+        $product_images = ProductImage::where('product_id', $item->id)->get();
+        $images = [];
+             foreach ($product_images as $image) {
+                 array_push($images,$image->img);
+            }
+            $item->setAttribute('secondary_images', $images);
+             return $item;
+         });
+         return response()->json($products);
+         
     }
 
      //Show All Products 
      public function all_products(Request $request){
-        $products = Product::where('status','active')->get();
-        return response()->json($products);
+        
+
+      $products = Product::where('status','active')->with('vendor')->get();
+
+        $products->map(function ($item, $key) {
+            
+          $product_images = ProductImage::where('product_id', $item->id)->get();
+          $images = [];
+             foreach ($product_images as $image) {
+                 array_push($images,$image->img);
+            }
+            $item->setAttribute('secondary_images', $images);
+             return $item;
+         });
+         return response()->json($products);
+         
+    
+
+        
     }
 
      //Show All Products sections
@@ -292,5 +363,106 @@ class ApiController extends Controller
         ], 201);
         
     }
+
+    //Online Store Request order
+    public function online_order_request(Request $request)
+    {
+        $user = User::where('api_token', $request->api_token)->first();
+        $data = [
+              'user_id' => $user->id,
+              'status' => 'New',
+              'amount' =>$request->amount
+        ];
+                     
+           $online_request = OnlineOrder::create($data);
+           $order_id =  $online_request->id;
+           $products = json_encode($request->products);
+           $products = json_decode($products);
+            foreach($products as $product){
+
+                OnlineOrderDetails::insert( [
+                    'order_id' =>  $order_id,
+                      'product_id' => $product->id,
+                      'price' =>$product->price,
+                      'quantity' => $product->count
+                ]);
+    
+             }
+
+      return response()->json(['code' => 1,"data"=>"Your order is created successfully"], 200);
+    }
+
+    //Show all Online Pending Orders
+    public function pending_online_orders(Request $request)
+    {
+        $user = User::where('api_token', $request->api_token)->first();
+
+        $pending_online_orders = OnlineOrder::where('user_id',$user->id)->whereIn('status', ['New', 'Awaiting payment','Encapsulation','Shipping'])->get();
+        return response()->json($pending_online_orders);
+    }
+
+     //Show all Online Done Orders
+     public function online_orders(Request $request)
+     {
+        $user = User::where('api_token', $request->api_token)->first();
+
+         $finished_online_orders = OnlineOrder::where('status', 'done')->where('user_id',$user->id)->get();
+         return response()->json($finished_online_orders);
+     }
+
+ //Charge Online Store Order
+ public function charge_online_order(Request $request)
+ {
+    
+     $user = User::where('api_token', $request->api_token)->first();
+   
+     try {
+         Stripe::setApiKey("sk_test_51IiI5nEg8ppfY3tVlFyNLUslq1OMTOAhd6YEGy0eUK6eplZP6claaBQFf8gWii9RzjipvjiOja0gyshgiVymbfyE00PfH3sJu8");
+     
+         $token = Token::create([
+                     'card' => [
+                           'number'    => $request->card_number,
+                            'exp_month' =>$request->exp_month,
+                            'exp_year'  => $request->exp_year,
+                             'cvc'       => $request->cvc,
+                        ]
+                     ]);
+        
+         $customer = Customer::create(array(
+             'email' => $user->email,
+             'source' => $token->id
+         ));
+
+     
+         $charge = Charge::create(array(
+             'customer' => $customer->id,
+             'amount' => $request->amount,
+             'currency' => 'usd'
+         ));
+        
+         $status_msg= $charge->status;
+          
+           if($status_msg == "succeeded"){
+             $status_msg ="Authorised";
+             $status_code = "A";
+             $data = [
+              'status' => 'Encapsulation'
+         
+                         ];
+            $id= $request->order_id;
+           $order = OnlineOrder::where('id',$id)->first();
+           $order->update($data);
+              return response()->json(['code' => 1,"data"=>"Your order is submit successfully"], 200);
+         }else{
+             $status_code = "D";
+             return response()->json(['code' => 0,"data"=>"Your order is Failed"], 401);
+         }
+     
+       
+     } catch (\Exception $ex) {
+         return $ex->getMessage();
+     }
+ }
+
 
 }

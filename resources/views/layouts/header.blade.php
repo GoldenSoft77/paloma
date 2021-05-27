@@ -15,6 +15,12 @@
   <link rel="stylesheet" href="{{ asset('plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
+  <!-- Data Table -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+  <!-- Custom -->
+  <link rel="stylesheet" href="{{ asset('/css/custom.css') }}">
+
+
 </head>
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <div class="wrapper">
@@ -257,13 +263,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/admin/pending_orders" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Pending Orders</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/admin/onlineorders" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Finished Orders</p>
                 </a>

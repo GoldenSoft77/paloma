@@ -1,0 +1,9 @@
+.dataTables_wrapper {
+    padding: 10px;
+    background-color: #fff;
+}
+
+.MakeDataTable th,.MakeDataTable td{
+    font-size: 14px;
+    color: #212529;
+}
