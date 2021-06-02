@@ -43,6 +43,13 @@ Route::post('done_bill_orders', 'ApiController@done_bill_orders');
 //Online Order
 Route::post('pending_online_orders', 'ApiController@pending_online_orders');
 Route::post('online_orders', 'ApiController@online_orders');
+Route::post('online_new_order','ApiController@online_order_request');
+Route::post('charge_online_order','ApiController@charge_online_order');
+//International Order
+Route::post('international_new_order','ApiController@international_order_request');
+Route::post('pending_international_orders', 'ApiController@pending_international_orders');
+Route::post('international_orders', 'ApiController@international_orders');
+
 //Vendor
 Route::post('vendor_request','ApiController@vendor_request');
 //Products
@@ -51,8 +58,7 @@ Route::post('my_products','ApiController@my_products');
 Route::post('all_products','ApiController@all_products');
 Route::post('delete_product','ApiController@delete_product');
 Route::post('product_sections','ApiController@product_sections');
-Route::post('online_new_order','ApiController@online_order_request');
-Route::post('charge_online_order','ApiController@charge_online_order');
+
 
 Route::get('/welcome','ApiController@show_welcome');
 Route::get('/newsticker','ApiController@show_newsticker');

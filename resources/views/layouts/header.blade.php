@@ -286,13 +286,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/admin/inter_pending_orders" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Pending Orders</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/admin/internationalorders" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Finished Orders</p>
                 </a>

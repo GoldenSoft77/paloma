@@ -79,7 +79,7 @@ class RegisterController extends Controller
             return response()->json(['code'=> 0,"data"=>'The phone number is already taken'], 401); 
          }
          else{
-
+            $name ="";
             if($request->file('profile_img')){
                 $file=$request->file('profile_img');
                 // $file = $file->store('images/profiles');
@@ -131,7 +131,7 @@ class RegisterController extends Controller
             ]);
        $success['token'] =  $token; 
        $success['user'] = $user;
-    //    \Mail::to($user->email)->send(new VerificationEmail($user));
+    \Mail::to($user->email)->send(new VerificationEmail($user));
        // Auth::login($user);
           return response()->json(['code'=> 1,"data"=>'Email Verification has sent'], 200); 
 

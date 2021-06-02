@@ -63,7 +63,7 @@ Route::get('/billorders/approve/{id}', 'BillOrderController@approve_bill');
 //Slider
 Route::get('/slider', 'SliderController@index');
 Route::get('/slider/create', 'SliderController@create');
-Route::post('/slider/store', 'SliderController@store');
+Route::post('/slider/store', 'SliderController@store')->name('admin.image.store');
 Route::delete('/slider/delete/{id}', 'SliderController@destroy');
 
 // Animated Bar
@@ -98,6 +98,15 @@ Route::get('/onlineorders/edit/{id}', 'OnlineOrderController@edit');
 Route::post('/onlineorders/add_shipping/{id}', 'OnlineOrderController@add_shipping_cost');
 Route::get('/onlineorders/change/{id}', 'OnlineOrderController@change');
 Route::post('/onlineorders/change_status/{id}', 'OnlineOrderController@change_status');
+
+
+//international store
+Route::get('/internationalorders','InternationalOrderController@index');
+Route::get('/inter_pending_orders','InternationalOrderController@pending');
+Route::get('/internationalorders/edit/{id}', 'InternationalOrderController@edit');
+Route::post('/internationalorders/add_shipping/{id}', 'InternationalOrderController@add_shipping_cost');
+Route::get('/internationalorders/change/{id}', 'InternationalOrderController@change');
+Route::post('/internationalorders/change_status/{id}', 'InternationalOrderController@change_status');
 
 //Product Sections
 Route::get('/productsections', 'ProductSectionController@index');

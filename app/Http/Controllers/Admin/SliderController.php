@@ -5,8 +5,8 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\Slider;
-use ImageOptimizer;
-use Spatie\ImageOptimizer\OptimizerChainFactory;
+use Image;
+// use Spatie\ImageOptimizer\OptimizerChainFactory;
 
 
 class SliderController extends Controller
@@ -28,7 +28,7 @@ class SliderController extends Controller
         return view('slider_add');
     }
 
-
+   
     public function store(Request $request)
     {
         $request->validate([
@@ -36,19 +36,33 @@ class SliderController extends Controller
         ]);
 
         if($request->file('slide_img')){
-            $file=$request->file('slide_img');
-            
-            $path = 'images/sliders/';
-            $name=$file->getClientOriginalName();
-            $name = $path.$name;
-            $file->move($path,$name);
-            $optimizerChain = OptimizerChainFactory::create();
+            $image=$request->file('slide_img');
 
-           $optimizerChain->optimize('http://'.$_SERVER['HTTP_HOST'].'/'.$name);
-            
+            $input['slide_img'] = $image->getClientOriginalName();
+            $path = 'images/thumbnail/';
+            $destinationPath = public_path('/images/thumbnail');
+            $img = Image::make($image->getRealPath());
+            $img->resize(100, 100, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath.'/'. $input['slide_img']);
+       
+            $destinationPath = public_path('/images/sliders');
+            $image->move($destinationPath,  $input['slide_img']);
+       
+    
+            // $path = 'images/sliders/';
+            // $name=$file->getClientOriginalName();
+            // $name = $path.$name;
+            // $file->move($path,$name);
+         
+            // $pathToImage = 'http://'.$_SERVER['HTTP_HOST'].'/'.$name;
+            // // $optimizerChain = OptimizerChainFactory::create();
+            // // $optimizerChain->optimize($pathToImage);
+         
            
+            $name = $path.$input['slide_img'];
             
-            $data['img'] = $name;
+          $data['img'] =  $name;
         }
 
         Slider::create($data);

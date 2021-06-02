@@ -16,6 +16,8 @@ use App\Socailmedia;
 use App\Slider;
 use App\OnlineOrder;
 use App\OnlineOrderDetails;
+use App\InternationalOrder;
+use App\InternationalOrderDetails;
 use App\Vendor;
 use App\Welcome;
 use Stripe\Stripe;
@@ -246,7 +248,7 @@ class ApiController extends Controller
             $main_file = $request->file('main_img');
             $path = 'images/products/';
             $main_name = $main_file->getClientOriginalName();
-            $main_name = $path.$main_name;
+            $main_name = $path.time().$main_name;
             $main_file -> move($path,$main_name);
         
         }
@@ -270,7 +272,7 @@ class ApiController extends Controller
             foreach($files as $file){
                 $path = 'images/products/';
                 $name=$file->getClientOriginalName();
-                $name = $path.$name;
+                $name = $path.time().$name;
                 $file->move($path,$name);
                 ProductImage::insert( [
                     'img'=>  $name,
@@ -300,7 +302,7 @@ class ApiController extends Controller
         $user_id = $user->id;
         $vendor = Vendor::where('user_id',$user_id)->first();
         $vendor_id = $vendor->id;
-        $products = Product::where('status','active')->with('vendor')->get();
+        $products = Product::where('status','active')->where('vendor_id', $vendor_id)->with('vendor')->get();
 
         $products->map(function ($item, $key) {
             
@@ -363,6 +365,7 @@ class ApiController extends Controller
         ], 201);
         
     }
+//online store
 
     //Online Store Request order
     public function online_order_request(Request $request)
@@ -463,6 +466,71 @@ class ApiController extends Controller
          return $ex->getMessage();
      }
  }
+//International store
 
+ //International Store Request order
+ public function international_order_request(Request $request)
+ {
+    
+ 
+     $user = User::where('api_token', $request->api_token)->first();
+     $data = [
+           'user_id' => $user->id,
+           'status' => 'New',
+           'amount' =>$request->amount,
+           'receiver_city' => $request->receiver_city,
+           'receiver_address' => $request->receiver_address,
+           'receiver_name' => $request->receiver_name,
+           'receiver_number' => $request->receiver_number,
+     ];
+                  
+        $international_request = InternationalOrder::create($data);
+        $order_id =  $international_request->id;
+      
+        $website_link = json_encode($request->website_link);
+        $website_links = json_decode($website_link);
+         foreach($website_links as $website_link){
+
+            InternationalOrderDetails::insert( [
+                 'order_id' =>  $order_id,
+                   'website_link' => $website_link,
+                 
+             ]);
+ 
+          }
+        // $data = [
+        //     'order_id' =>  $order_id,
+        //     'website_link' => $website_link,
+        //     'receiver_city' => $request->receiver_city,
+        //     'receiver_address' => $request->receiver_address,
+        //     'receiver_name' => $request->receiver_name,
+        //     'receiver_number' => $request->receiver_number,
+        //     'status' => 'pending'
+       
+        //                ];
+                     
+            // $international_order = InternationalOrderDetails::create($data);
+      
+   return response()->json(['code' => 1,"data"=>"Your order is created successfully"], 200);
+
+}
+
+        //Show all International Pending Orders
+    public function pending_international_orders(Request $request)
+    {
+        $user = User::where('api_token', $request->api_token)->first();
+
+        $pending_international_orders = InternationalOrder::where('user_id',$user->id)->whereIn('status', ['New', 'Awaiting payment','Encapsulation','Shipping'])->get();
+        return response()->json($pending_international_orders);
+    }
+
+     //Show all International Done Orders
+     public function international_orders(Request $request)
+     {
+        $user = User::where('api_token', $request->api_token)->first();
+
+         $finished_international_orders = InternationalOrder::where('status', 'done')->where('user_id',$user->id)->get();
+         return response()->json($finished_international_orders);
+     }
 
 }
