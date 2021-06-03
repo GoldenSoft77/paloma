@@ -58,6 +58,10 @@ Route::post('my_products','ApiController@my_products');
 Route::post('all_products','ApiController@all_products');
 Route::post('delete_product','ApiController@delete_product');
 Route::post('product_sections','ApiController@product_sections');
+Route::post('add_favorite_product', 'ApiController@add_favorite_product');
+Route::post('remove_favorite_product', 'ApiController@remove_favorite_product');
+Route::post('my_favorite', 'ApiController@my_favorite');
+
 
 
 Route::get('/welcome','ApiController@show_welcome');

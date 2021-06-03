@@ -11,6 +11,7 @@ use App\BillOrder;
 use App\User;
 use App\Product;
 use App\ProductSection;
+use App\FavoriteProduct;
 use App\ProductImage;
 use App\Socailmedia;
 use App\Slider;
@@ -365,6 +366,66 @@ class ApiController extends Controller
         ], 201);
         
     }
+        //Add Product to Favorite
+    public function add_favorite_product(Request $request)
+    {
+        $user = User::where('api_token', $request->api_token)->first();
+        $product = Product::where('id',$request->product_id)->first();
+        $user_id = $user->id;
+        if(FavoriteProduct::where('user_id', '=', $user_id)->where('product_id','=',$request->product_id)->exists()){
+         return response()->json(['code' =>0,"data"=>'You already added product'.' '.$product->name.' '. 'to your favorite'], 401);
+
+        }
+        else{
+      
+        $data = [
+            'product_id' => $product->id,
+            'user_id' => $user_id
+        ];
+        $favorite = FavoriteProduct::create($data);
+        return response()->json(['code' => 1,"data"=>'Product'.' '.$product->name.' '.'is added successfully to favorite'], 200);
+       }
+    }
+
+        //Add Product to Favorite
+        public function remove_favorite_product(Request $request)
+        {
+            $user = User::where('api_token', $request->api_token)->first();
+            $product = Product::where('id',$request->product_id)->first();
+            $user_id = $user->id;
+         
+            if(FavoriteProduct::where('user_id', '=', $user_id)->where('product_id','=',$request->product_id)->exists()){
+             $product = FavoriteProduct::where('user_id', '=', $user_id)->where('product_id','=',$request->product_id)->delete();
+          
+             return response()->json(['code' => 1 ,"data"=>'You remove a product from your favorite'], 200);
+    
+            }
+          
+            
+           
+        }
+        //Show all Favorite products for specific user
+    public function my_favorite(Request $request)
+    {
+
+        
+        $user = User::where('api_token', $request->api_token)->first();
+        $favorite_products = FavoriteProduct::where('user_id',$user->id)->get();
+
+        $favorite_products->map(function ($item, $key) {
+            
+          $favorites = Product::where('id', $item->product_id)->get();
+          $products = [];
+             foreach ($favorites as $favorite) {
+                 array_push($products,$favorite);
+            }
+            $item->setAttribute('product', $products);
+             return $item;
+         });
+
+       
+        return response()->json($favorite_products);
+    }
 //online store
 
     //Online Store Request order
@@ -466,6 +527,8 @@ class ApiController extends Controller
          return $ex->getMessage();
      }
  }
+
+
 //International store
 
  //International Store Request order
@@ -477,7 +540,6 @@ class ApiController extends Controller
      $data = [
            'user_id' => $user->id,
            'status' => 'New',
-           'amount' =>$request->amount,
            'receiver_city' => $request->receiver_city,
            'receiver_address' => $request->receiver_address,
            'receiver_name' => $request->receiver_name,

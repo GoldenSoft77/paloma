@@ -32,8 +32,7 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label>Amount *</label>
-                            <input type="text" class="form-control" name="amount" value="{{$order->amount}}" required
-                                readonly>
+                            <input type="text" class="form-control" name="amount"  required >
 
                         </div>
 
