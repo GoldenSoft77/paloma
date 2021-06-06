@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\InternationalOrder;
 use App\InternationalOrderDetails;
+use App\Notification;
 
 class InternationalOrderController extends Controller
 {
@@ -48,6 +49,11 @@ class InternationalOrderController extends Controller
         ];
         
         $order->update($data);
+        Notification::insert( [
+            'notification_message'=>  'Total Payment'.' '.$total_amount.' '.'for your order number'.' '. $order->id,
+            'user_id'=> $order->user_id,
+            'status' => 0
+        ]);
         return redirect('/admin/inter_pending_orders')->with('message','The shipping cost has been Added successfully');
 
     }
@@ -68,6 +74,11 @@ class InternationalOrderController extends Controller
             'status' =>  $request->status
        ];
        $order->update($data);
+       Notification::insert( [
+        'notification_message'=>  'Your Order number'.' '.$order->id.' '.'status is'.' '.$order->status,
+        'user_id'=> $order->user_id,
+        'status' => 0
+         ]);
        return redirect('/admin/inter_pending_orders')->with('message','The order status has been Added successfully');
       }
 

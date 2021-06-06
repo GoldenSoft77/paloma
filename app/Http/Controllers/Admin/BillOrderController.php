@@ -11,6 +11,7 @@ use Stripe\Customer;
 use Stripe\Charge;
 use Stripe\Token;
 use App\User;
+use App\Notification;
 
 class BillOrderController extends Controller
 {
@@ -52,6 +53,11 @@ class BillOrderController extends Controller
         ];
       
         $billorders->update($data);
+        Notification::insert( [
+          'notification_message'=>  $billorders->type.' '.'bill has been Charged Successfully',
+          'user_id'=> $billorders->user_id,
+          'status' => 0
+      ]);
         return redirect('/admin/billorders')->with('message', 'Bill Charged Successfully');
 
     }

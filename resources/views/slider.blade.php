@@ -34,6 +34,9 @@
           <div class="col-md-4 col-sm-6 col-12 mb-3">
             <div class="single-box">
               <img src="{{ asset($slide->img) }}" class="img-fluid">
+              @if(isset($slide->url))
+              <p>URL: {{$slide->url}}</p>
+              @endif
               <ul>
                 <li>
                   <button data-toggle="modal" data-target="{{'#exampleModal'.$slide->id }}">

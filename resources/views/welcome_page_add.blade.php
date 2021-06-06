@@ -50,13 +50,22 @@
                 <label for="exampleInputFile">Slide Image *</label>
                 <div class="input-group">
                   <div class="custom-file">
-                    <input type="file" class="custom-file-input" name="slide_img" accept="image/*" required>
+                    <input type="file" class="custom-file-input" name="slide_img" accept="image/*" id="image" required>
                     <label class="custom-file-label">Choose img</label>
                   </div>
                   <div class="input-group-append">
                     <span class="input-group-text">Upload Image</span>
                   </div>
                 </div>
+                <div class="col-md-12 mb-2">
+                                <div>
+                                    <label for="exampleInputFile">Image Preview</label>
+                                    <div class="input-group">
+                                        <img src="{{ asset('/images/image-preview.jpg') }}" class="img-fluid small-img"
+                                            id="image_preview_container">
+                                    </div>
+                                </div>
+                            </div>
                 @if ($errors->has('slide_img'))
                   <span class="text-danger">{{ $errors->first('slide_img') }}</span>
                 @endif

@@ -7,6 +7,9 @@ use App\Product;
 use App\ProductSection;
 use App\ProductImage;
 use App\Vendor;
+use App\ApiRequest;
+use Carbon\Carbon;
+use App\Notification;
 
 class ProductController extends Controller
 {
@@ -99,20 +102,46 @@ class ProductController extends Controller
     public function approve_product(Request $request,$id) {
 
         $product = Product::where('id',$id)->first();
-
+        $vendor = Vendor::where('id',$product->vendor_id)->first();
         $data = [
              'status' => 'active',
         ];
+        $api_request = ApiRequest::where('api_request','all_products')->first(); 
+        $data = [
+      
+            'api_request'=>  'all_products',
+            'edit_time' =>Carbon::now()
+        ];
+        $api_request->update($data);
         
         $product->update($data);
-        return redirect('/admin/products')->with('message','The Product has been Added successfully');
+        Notification::insert( [
+            'notification_message'=>  'Product'.' '.$product->name.' '.'has been Added successfully',
+            'user_id'=> $vendor->user_id,
+            'status' => 0
+        ]);
+        return redirect('/admin/products')->with('message','The Product has been added successfully');
 
     }
      //Admin approve Delete Product
     public function approve_product_delete(Request $request,$id) {
 
+        $product = Product::where('id',$id)->first();
+        $vendor = Vendor::where('id',$product->vendor_id)->first();
+        
+        $api_request = ApiRequest::where('api_request','all_products')->first(); 
+        $data = [
+      
+            'api_request'=>  'all_products',
+            'edit_time' =>Carbon::now()
+        ];
+        $api_request->update($data);
+        Notification::insert( [
+            'notification_message'=>  'Product'.' '.$product->name.' '.'has been removed successfully',
+            'user_id'=> $vendor->user_id,
+            'status' => 0
+        ]);
         $product = Product::where('id',$id)->delete();
-
         return redirect('/admin/products')->with('message','The Product has been removed successfully');
     }
 

@@ -5,9 +5,9 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\Slider;
+use App\ApiRequest;
 use Image;
-// use Spatie\ImageOptimizer\OptimizerChainFactory;
-
+use Carbon\Carbon;
 
 class SliderController extends Controller
 {
@@ -31,6 +31,7 @@ class SliderController extends Controller
    
     public function store(Request $request)
     {
+        
         $request->validate([
             'slide_img' => 'required|image'
         ]);
@@ -62,10 +63,23 @@ class SliderController extends Controller
            
             $name = $path.$input['slide_img'];
             
-          $data['img'] =  $name;
+        
         }
+        $data = [
+            'url' => $request->url,
+            'img' =>$name
+        ];
 
         Slider::create($data);
+
+        $api_request = ApiRequest::where('api_request','slider')->first(); 
+        $data = [
+      
+            'api_request'=>  'slider',
+            'edit_time' =>Carbon::now()
+        ];
+        $api_request->update($data);
+
 
         return redirect('/admin/slider')->with('message','New Slide has been added successfully');
     }
@@ -73,6 +87,12 @@ class SliderController extends Controller
     public function destroy($id)
     {
         $slides = Slider::where('id',$id)->delete();
+        $api_request = ApiRequest::where('api_request','slider')->first(); 
+        $data = [
+            'api_request'=>  'slider',
+            'edit_time' =>Carbon::now()
+        ];
+        $api_request->update($data);
 
         return redirect('/admin/slider')->with('message','The Slide has been removed successfully');
     }

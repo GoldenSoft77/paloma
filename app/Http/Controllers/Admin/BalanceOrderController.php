@@ -11,6 +11,7 @@ use Stripe\Customer;
 use Stripe\Charge;
 use Stripe\Token;
 use App\User;
+use App\Notification;
 
 
 class BalanceOrderController extends Controller
@@ -63,6 +64,12 @@ class BalanceOrderController extends Controller
         ];
       
         $balanceorders->update($data);
+
+        Notification::insert( [
+          'notification_message'=>  'Balance has been Charged Successfully',
+          'user_id'=> $balanceorders->user_id,
+          'status' => 0
+      ]);
         return redirect('/admin/balanceorders')->with('message', 'Balance Charged Successfully');
 
     }

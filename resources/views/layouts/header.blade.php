@@ -198,6 +198,12 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
+            <li class="nav-item">
+                <a href="/admin/balancepackages" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Balance Packages</p>
+                </a>
+              </li>
               <li class="nav-item">
                 <a href="/admin/mtn_balanceorders" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>

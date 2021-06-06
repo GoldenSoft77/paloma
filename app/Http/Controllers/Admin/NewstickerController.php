@@ -5,6 +5,8 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\Newsticker;
+use App\ApiRequest;
+use Carbon\Carbon;
 
 class NewstickerController extends Controller
 {
@@ -47,6 +49,14 @@ class NewstickerController extends Controller
       
 
         Newsticker::create($data);
+        
+        $api_request = ApiRequest::where('api_request','newsticker')->first(); 
+        $data = [
+      
+            'api_request'=>  'newsticker',
+            'edit_time' =>Carbon::now()
+        ];
+        $api_request->update($data);
 
         return redirect('/admin/animated_bar')->with('message','New Sentence has been added successfully');
     }
@@ -82,6 +92,14 @@ class NewstickerController extends Controller
 
         $bar->update($data);
 
+        $api_request = ApiRequest::where('api_request','newsticker')->first(); 
+        $data = [
+      
+            'api_request'=>  'newsticker',
+            'edit_time' =>Carbon::now()
+        ];
+        $api_request->update($data);
+
         return redirect('/admin/animated_bar/edit/'.$bar->id)->with('message','The Sentence has been edited successfully');
 
     }
@@ -89,6 +107,13 @@ class NewstickerController extends Controller
     public function destroy($id)
     {
         $bar = Newsticker::where('id',$id)->delete();
+        $api_request = ApiRequest::where('api_request','newsticker')->first(); 
+        $data = [
+      
+            'api_request'=>  'newsticker',
+            'edit_time' =>Carbon::now()
+        ];
+        $api_request->update($data);
 
         return redirect('/admin/animated_bar')->with('message','The Sentence has been removed successfully');
     }

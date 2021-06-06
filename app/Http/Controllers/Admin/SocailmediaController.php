@@ -5,6 +5,8 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\Socailmedia;
+use App\ApiRequest;
+use Carbon\Carbon;
 
 class SocailmediaController extends Controller
 {
@@ -32,6 +34,13 @@ class SocailmediaController extends Controller
         $socailmedia->whatsapp = $request->whatsapp;
 
         $socailmedia->save();
+        $api_request = ApiRequest::where('api_request','socail_media')->first(); 
+        $data = [
+      
+            'api_request'=>  'socail_media',
+            'edit_time' =>Carbon::now()
+        ];
+        $api_request->update($data);
 
         return redirect('/admin/socail_media')->with('message','The links has been edited successfully');
 

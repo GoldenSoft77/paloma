@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Vendor;
+use App\Notification;
+
 class VendorController extends Controller
 {
 
@@ -55,6 +57,11 @@ class VendorController extends Controller
         ]; 
      
         $user->update($data);
+        Notification::insert( [
+            'notification_message'=>  'Your Vendor request has been accepted',
+            'user_id'=> $user->id,
+            'status' =>0
+        ]);
         return redirect('/admin/vendors')->with('message', 'Vendor Added Successfully');
 
     }

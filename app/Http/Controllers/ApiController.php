@@ -25,6 +25,8 @@ use Stripe\Stripe;
 use Stripe\Customer;
 use Stripe\Charge;
 use Stripe\Token;
+use App\ApiRequest;
+use App\Notification;
 use DB;
 
 
@@ -199,7 +201,32 @@ class ApiController extends Controller
         $slides = Slider::all();
         return response()->json($slides);
     }
+     //Show All Api requests
+     public function api_requests(){
+        $api_requests = ApiRequest::all();
+        return response()->json($api_requests);
+    }
 
+    //Show All Notifications
+     public function show_notification(Request $request){
+        $user = User::where('api_token', $request->api_token)->first();
+         $notification = Notification::where('user_id',$user->id)->get();
+         return response()->json($notification);
+     }
+     //Change notification status
+     public function edit_notification(Request $request){
+         $user = User::where('api_token', $request->api_token)->first();
+         $notification = Notification::where('id', $request->notification_id)->where('user_id',$user->id)->first();
+         $data = [
+            'status' => 1
+        ];
+        $notification->update($data);
+        return response()->json([
+            "message" => 'Notification #'.' '. $notification->id.' '.'Done'
+        ], 201);
+      
+         
+     }
      //Show All social media
      public function show_socialmedia(){
         $socailmedia = Socailmedia::first();
@@ -322,11 +349,21 @@ class ApiController extends Controller
      //Show All Products 
      public function all_products(Request $request){
         
-
-      $products = Product::where('status','active')->with('vendor')->get();
-
+        $products = Product::where('status','active')->with('vendor')->get();
+        $user = User::where('api_token',$request->api_token)->first();
+        foreach ($products as $product) {
+         
+            if(FavoriteProduct::where('user_id', '=', $user->id)->where('product_id','=',$product->id)->exists()){
+                $product->setAttribute('Favorite', 'true');
+               }
+               else{
+                $product->setAttribute('Favorite', 'False');
+               }
+            }
+         
+         
+    
         $products->map(function ($item, $key) {
-            
           $product_images = ProductImage::where('product_id', $item->id)->get();
           $images = [];
              foreach ($product_images as $image) {
@@ -334,7 +371,11 @@ class ApiController extends Controller
             }
             $item->setAttribute('secondary_images', $images);
              return $item;
+
+             
          });
+        
+        
          return response()->json($products);
          
     
@@ -594,5 +635,59 @@ class ApiController extends Controller
          $finished_international_orders = InternationalOrder::where('status', 'done')->where('user_id',$user->id)->get();
          return response()->json($finished_international_orders);
      }
+
+     //Charge International Store Order
+ public function charge_international_order(Request $request)
+ {
+    
+     $user = User::where('api_token', $request->api_token)->first();
+   
+     try {
+         Stripe::setApiKey("sk_test_51IiI5nEg8ppfY3tVlFyNLUslq1OMTOAhd6YEGy0eUK6eplZP6claaBQFf8gWii9RzjipvjiOja0gyshgiVymbfyE00PfH3sJu8");
+     
+         $token = Token::create([
+                     'card' => [
+                           'number'    => $request->card_number,
+                            'exp_month' =>$request->exp_month,
+                            'exp_year'  => $request->exp_year,
+                             'cvc'       => $request->cvc,
+                        ]
+                     ]);
+        
+         $customer = Customer::create(array(
+             'email' => $user->email,
+             'source' => $token->id
+         ));
+
+     
+         $charge = Charge::create(array(
+             'customer' => $customer->id,
+             'amount' => $request->amount,
+             'currency' => 'usd'
+         ));
+        
+         $status_msg= $charge->status;
+          
+           if($status_msg == "succeeded"){
+             $status_msg ="Authorised";
+             $status_code = "A";
+             $data = [
+              'status' => 'Encapsulation'
+         
+                         ];
+            $id= $request->order_id;
+           $order = InternationalOrder::where('id',$id)->first();
+           $order->update($data);
+              return response()->json(['code' => 1,"data"=>"Your order is submit successfully"], 200);
+         }else{
+             $status_code = "D";
+             return response()->json(['code' => 0,"data"=>"Your order is Failed"], 401);
+         }
+     
+       
+     } catch (\Exception $ex) {
+         return $ex->getMessage();
+     }
+ }
 
 }

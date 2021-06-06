@@ -5,6 +5,8 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\BalancePackage;
+use App\ApiRequest;
+use Carbon\Carbon;
 
 class BalancePackageController extends Controller
 {
@@ -35,7 +37,14 @@ class BalancePackageController extends Controller
         ];
       
         $balance_package = BalancePackage::create($data);
-        return redirect('balancepackages')->with('message','New Package has been added successfully');
+        $api_request = ApiRequest::where('api_request','packages')->first(); 
+        $data = [
+      
+            'api_request'=>  'packages',
+            'edit_time' =>Carbon::now()
+        ];
+        $api_request->update($data);
+        return redirect('/admin/balancepackages')->with('message','New Package has been added successfully');
     }
     //Edit a specific Balance Package
     public function edit($id)
@@ -55,6 +64,13 @@ class BalancePackageController extends Controller
         ];
 
         $balance_package->update($data);
+        $api_request = ApiRequest::where('api_request','packages')->first(); 
+        $data = [
+      
+            'api_request'=>  'packages',
+            'edit_time' =>Carbon::now()
+        ];
+        $api_request->update($data);
 
         return redirect()->back()->with('message', 'Package has been updated successfully');
 
@@ -63,7 +79,13 @@ class BalancePackageController extends Controller
     public function destroy($id)
     {
         $balance_package = BalancePackage::where('id',$id)->delete();
-
+        $api_request = ApiRequest::where('api_request','packages')->first(); 
+        $data = [
+      
+            'api_request'=>  'packages',
+            'edit_time' =>Carbon::now()
+        ];
+        $api_request->update($data);
         return redirect('/admin/balancepackages')->with('message','The Package has been removed successfully');
     }
 

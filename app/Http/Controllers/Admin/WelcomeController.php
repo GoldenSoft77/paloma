@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Welcome;
+use App\ApiRequest;
+use Carbon\Carbon;
 
 class WelcomeController extends Controller
 {
@@ -62,6 +64,13 @@ class WelcomeController extends Controller
         }
 
         Welcome::create($data);
+        $api_request = ApiRequest::where('api_request','welcome')->first(); 
+        $data = [
+      
+            'api_request'=>  'welcome',
+            'edit_time' =>Carbon::now()
+        ];
+        $api_request->update($data);
 
         return redirect('/admin/welcome_page')->with('message','New Slide has been added successfully');
     }
@@ -110,6 +119,14 @@ class WelcomeController extends Controller
             $welcome->img = $name;
         }
         $welcome->update($data);
+      
+        $api_request = ApiRequest::where('api_request','welcome')->first(); 
+        $data = [
+      
+            'api_request'=>  'welcome',
+            'edit_time' =>Carbon::now()
+        ];
+        $api_request->update($data);
        
 
         return redirect('/admin/welcome_page/edit/'.$welcome->id)->with('message','The slide has been edited successfully');
@@ -119,7 +136,13 @@ class WelcomeController extends Controller
     public function destroy($id)
     {
         $welcome = Welcome::where('id',$id)->delete();
-
+        $api_request = ApiRequest::where('api_request','welcome')->first(); 
+        $data = [
+      
+            'api_request'=>  'welcome',
+            'edit_time' =>Carbon::now()
+        ];
+        $api_request->update($data);
         return redirect('/admin/welcome_page')->with('message','The Slide has been removed successfully');
     }
 

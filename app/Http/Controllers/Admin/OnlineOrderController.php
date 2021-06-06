@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\OnlineOrder;
 use App\OnlineOrderDetails;
+use App\Notification;
 
 class OnlineOrderController extends Controller
 {
@@ -48,6 +49,11 @@ class OnlineOrderController extends Controller
         ];
         
         $order->update($data);
+        Notification::insert( [
+            'notification_message'=>  'Shipping cost'.' '.$shipping.' '.'has been added Successfully to your order number'.' '. $order->id,
+            'user_id'=> $order->user_id,
+            'status' => 0
+        ]);
         return redirect('/admin/pending_orders')->with('message','The shipping cost has been Added successfully');
 
     }
@@ -68,6 +74,11 @@ class OnlineOrderController extends Controller
             'status' =>  $request->status
        ];
        $order->update($data);
+       Notification::insert( [
+        'notification_message'=>  'Your Order number'.' '.$order->id.' '.'status is'.' '.$order->status,
+        'user_id'=> $order->user_id,
+        'status' => 0
+         ]);
        return redirect('/admin/pending_orders')->with('message','The order status has been Added successfully');
       }
 

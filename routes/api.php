@@ -49,6 +49,7 @@ Route::post('charge_online_order','ApiController@charge_online_order');
 Route::post('international_new_order','ApiController@international_order_request');
 Route::post('pending_international_orders', 'ApiController@pending_international_orders');
 Route::post('international_orders', 'ApiController@international_orders');
+Route::post('charge_international_order','ApiController@charge_international_order');
 
 //Vendor
 Route::post('vendor_request','ApiController@vendor_request');
@@ -72,3 +73,11 @@ Route::get('/socail_media','ApiController@show_socialmedia');
 Route::get('/payment','PaymentController@paymentProcess');
 
 Route::post('/verify', 'VerifyController@VerifyEmail');
+
+Route::post('/api_requests', 'ApiController@api_requests');
+
+Route::post('/show_notification', 'ApiController@show_notification');
+Route::post('/edit_notification', 'ApiController@edit_notification');
+
+
+
